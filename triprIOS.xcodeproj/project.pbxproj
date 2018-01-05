@@ -13,6 +13,9 @@
 		3576E73D1FFB8176005A8BCB /* triprIOS.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3576E73B1FFB8176005A8BCB /* triprIOS.xcdatamodeld */; };
 		3576E73F1FFB8176005A8BCB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3576E73E1FFB8176005A8BCB /* Assets.xcassets */; };
 		3576E7421FFB8176005A8BCB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3576E7401FFB8176005A8BCB /* LaunchScreen.storyboard */; };
+		3576E74B1FFB8326005A8BCB /* TriprAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3576E74A1FFB8326005A8BCB /* TriprAPI.swift */; };
+		3576E74E1FFB8874005A8BCB /* TriprUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3576E74D1FFB8874005A8BCB /* TriprUser.swift */; };
+		3576E7501FFBBD17005A8BCB /* TriprAPIMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3576E74F1FFBBD17005A8BCB /* TriprAPIMessages.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		3576E73E1FFB8176005A8BCB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3576E7411FFB8176005A8BCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3576E7431FFB8176005A8BCB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3576E74A1FFB8326005A8BCB /* TriprAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprAPI.swift; sourceTree = "<group>"; };
+		3576E74D1FFB8874005A8BCB /* TriprUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprUser.swift; sourceTree = "<group>"; };
+		3576E74F1FFBBD17005A8BCB /* TriprAPIMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprAPIMessages.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,7 @@
 		3576E7331FFB8176005A8BCB /* triprIOS */ = {
 			isa = PBXGroup;
 			children = (
+				3576E7491FFB8312005A8BCB /* TriprApi */,
 				3576E7341FFB8176005A8BCB /* AppDelegate.swift */,
 				3576E7361FFB8176005A8BCB /* ViewController.swift */,
 				3576E7381FFB8176005A8BCB /* Main.storyboard */,
@@ -65,6 +72,24 @@
 				3576E73B1FFB8176005A8BCB /* triprIOS.xcdatamodeld */,
 			);
 			path = triprIOS;
+			sourceTree = "<group>";
+		};
+		3576E7491FFB8312005A8BCB /* TriprApi */ = {
+			isa = PBXGroup;
+			children = (
+				3576E74C1FFB8866005A8BCB /* TriprModels */,
+				3576E74A1FFB8326005A8BCB /* TriprAPI.swift */,
+				3576E74F1FFBBD17005A8BCB /* TriprAPIMessages.swift */,
+			);
+			path = TriprApi;
+			sourceTree = "<group>";
+		};
+		3576E74C1FFB8866005A8BCB /* TriprModels */ = {
+			isa = PBXGroup;
+			children = (
+				3576E74D1FFB8874005A8BCB /* TriprUser.swift */,
+			);
+			path = TriprModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +164,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3576E74B1FFB8326005A8BCB /* TriprAPI.swift in Sources */,
 				3576E7371FFB8176005A8BCB /* ViewController.swift in Sources */,
+				3576E7501FFBBD17005A8BCB /* TriprAPIMessages.swift in Sources */,
+				3576E74E1FFB8874005A8BCB /* TriprUser.swift in Sources */,
 				3576E7351FFB8176005A8BCB /* AppDelegate.swift in Sources */,
 				3576E73D1FFB8176005A8BCB /* triprIOS.xcdatamodeld in Sources */,
 			);
