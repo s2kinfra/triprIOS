@@ -27,11 +27,7 @@ class ViewController: UIViewController {
     
     @IBAction func login(_ sender: Any) {
         do {
-        let api = TriprAPI.sharedInstance
-            api.setEnviroment(.PROD)
-            api.toggleLogging()
-//            try api.testError()
-        try api.loginUser(username: "daniel", password: "test") { (response, user) in
+            try api.loginUser(username: username.text!, password: password.text!) { (response, user) in
             print(response)
         }
         }catch{

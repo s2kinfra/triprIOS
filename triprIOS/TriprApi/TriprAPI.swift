@@ -8,10 +8,6 @@
 
 import Foundation
 
-enum httpMethod : String {
-    case POST = "POST", GET = "GET", PUT = "PUT", DELETE = "DELETE"
-}
-
 enum APIEnviroment {
     case PROD, TEST, DEV
 }
@@ -74,15 +70,17 @@ final class TriprAPI {
         
         let encoder = JSONEncoder()
         
-        try callAPI(url: "\(baseURL)/user/login", body: String(data: encoder.encode(bodyLoginUser), encoding: .utf8)!, contentType: "application/json", httpMethod : .POST, result: { (response) in
-            do{
-                let decoder = JSONDecoder.init()
-                let user = try decoder.decode(TriprUser.self, from: response.data!)
-                self.currentUser = user
-            }catch let postError{
-                print(postError.localizedDescription)
-            }
-        })
+        try triprAPIMessage.init(payload: String(data: encoder.encode(bodyLoginUser), encoding: .utf8)!, httpMethod: .POST, contentType: "application/json", URL: "\(baseURL)/user/login")
+        
+//        try callAPI(url: "\(baseURL)/user/login", body: String(data: encoder.encode(bodyLoginUser), encoding: .utf8)!, contentType: "application/json", httpMethod : .POST, result: { (response) in
+//            do{
+//                let decoder = JSONDecoder.init()
+//                let user = try decoder.decode(TriprUser.self, from: response.data!)
+//                self.currentUser = user
+//            }catch let postError{
+//                print(postError.localizedDescription)
+//            }
+//        })
         
         
     }

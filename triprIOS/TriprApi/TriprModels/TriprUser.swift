@@ -71,18 +71,7 @@ struct TriprFile : Codable {
 //    };
 }
 
-struct feed : Codable {
-    var comments : [Comment]?
-    var createdBy : Int
-    var envies : [Envy]?
-    var feedObject : String
-    var feedObjectId : Int
-    var feedText : String
-    var feedType : Int
-    var id : Int
-    var targetId : Int
-    var timestamp: Double
-}
+
 
 struct TriprUser : Codable{
     
@@ -93,7 +82,7 @@ struct TriprUser : Codable{
     var fullname : String?
     var id : Int
     
-    var feeds : [feed]?
+    var feeds : [Feed]?
     
     var followerRequests : [FollowRequest]?
     var followers : [Followers]?
@@ -112,6 +101,7 @@ struct TriprUser : Codable{
         self.id = _id
         
     }
+    
    
 }
 
