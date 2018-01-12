@@ -21,6 +21,55 @@ struct TriprAPIStatusResponse : Codable{
     var error : String?
 }
 
+enum VendingMachineError: Error {
+    case invalidSelection
+    case insufficientFunds(coinsNeeded: Int)
+    case outOfStock
+}
+
+enum triprAPIEndpointURLs {
+    case user_login(baseURL : String),
+         user_register(baseURL : String),
+         error_test_get(baseURL : String),
+         error_test_put(baseURL : String),
+         error_test_delete(baseURL : String),
+         error_test_post(baseURL : String)
+    
+    var method : httpMethod {
+        switch self {
+        case .user_login:
+            return .POST
+        case .user_register:
+            return .POST
+        case .error_test_post:
+            return .POST
+        case .error_test_delete:
+            return .DELETE
+        case .error_test_put:
+            return .PUT
+        default:
+            return .GET
+        }
+    }
+    
+    var url : String {
+        switch self {
+        case .user_login(let baseURL):
+            return "\(baseURL)/user/login"
+        case .user_register(let baseURL):
+            return "\(baseURL)/user/register"
+        case .error_test_get(let baseURL):
+            return "\(baseURL)/error"
+        case .error_test_post(let baseURL) :
+            return "\(baseURL)/error"
+        case .error_test_put(let baseURL):
+            return "\(baseURL)/error"
+        case .error_test_delete(let baseURL):
+            return "\(baseURL)/error"
+        }
+    }
+}
+
 final class TriprAPI {
     
     static let sharedInstance = TriprAPI.init(apikey: "ios")
@@ -59,39 +108,27 @@ final class TriprAPI {
         return self.enviroment
     }
     
-    func toggleLogging() {
-        self.logging = !self.logging
-        print("API logging active \(logging)")
-    }
-    
     func loginUser(username: String, password: String, completionHandler: (TriprAPIStatusResponse, TriprUser?)->Void ) throws {
         
         let bodyLoginUser = triprMessageUserLogin.init(email: username, password: password)
         
-        let encoder = JSONEncoder()
-        
-        try triprAPIMessage.init(payload: String(data: encoder.encode(bodyLoginUser), encoding: .utf8)!, httpMethod: .POST, contentType: "application/json", URL: "\(baseURL)/user/login")
-        
-//        try callAPI(url: "\(baseURL)/user/login", body: String(data: encoder.encode(bodyLoginUser), encoding: .utf8)!, contentType: "application/json", httpMethod : .POST, result: { (response) in
-//            do{
-//                let decoder = JSONDecoder.init()
-//                let user = try decoder.decode(TriprUser.self, from: response.data!)
-//                self.currentUser = user
-//            }catch let postError{
-//                print(postError.localizedDescription)
-//            }
-//        })
-        
-        
+    
+        guard let message = triprAPIMessage.init(payload: bodyLoginUser, httpMethod: triprAPIEndpointURLs.user_login(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.user_login(baseURL: baseURL).url, quable: true, priority: .high) else {
+            throw VendingMachineError.outOfStock
+        }
+        try message.sendMessage(response: { (response) in
+            
+            })
     }
     
-    func registerUser(username _username: String, email _email : String, firstname _firstname : String, lastname _lastname : String, password _password : String, completionHandler: @escaping (TriprUser?)->Void) throws {
+    func registerUser(username _username: String, email _email : String, firstname _firstname : String, lastname _lastname : String, password _password : String, completionHandler: @escaping (TriprAPIStatusResponse, TriprUser?)->Void) throws {
         
         let bodyRegisterUser = triprMessageUserRegister.init(username: _username, firstname: _firstname, lastname: _lastname, password: _password, email: _email)
         
-        let encoder = JSONEncoder()
-        
-        try callAPI(url: "\(baseURL)/user/register", body: String(data: encoder.encode(bodyRegisterUser), encoding: .utf8)!, httpMethod : .POST ) { response in
+        guard let message = triprAPIMessage.init(payload: bodyRegisterUser, httpMethod: triprAPIEndpointURLs.user_register(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.user_register(baseURL: baseURL).url, quable: true, priority: .high) else {
+            throw VendingMachineError.invalidSelection
+        }
+        try message.sendMessage { (apiResponse) in
             
         }
         
@@ -100,72 +137,24 @@ final class TriprAPI {
     func testError(httpMethod : httpMethod = .POST) throws {
         switch httpMethod {
         case .GET:
-            try callAPI(url: "\(baseURL)/error", body: "", httpMethod : .GET ,result: { (response) in
+            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_get(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_get(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (reponse) in
                 
             })
+           
         case .POST:
-            try callAPI(url: "\(baseURL)/error", body: "", httpMethod : .POST, result: { (response) in
+            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_post(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_post(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (reponse) in
                 
             })
-        default:
-            try callAPI(url: "\(baseURL)/error", body: "", httpMethod : .POST, result: { (response) in
+        case .PUT:
+            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_put(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_put(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (reponse) in
+                
+            })
+        case .DELETE:
+            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_delete(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_delete(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (reponse) in
                 
             })
         }
-        
-    }
-    
-    private func callAPI(url: String, body: String, contentType : String = "", httpMethod _httpMethod : httpMethod, result : @escaping (TriprAPIDataResponse)->Void) throws
-    {
-        let request = NSMutableURLRequest(url: NSURL(string: url)! as URL)
-        request.httpMethod = _httpMethod.rawValue
-        request.setValue(contentType, forHTTPHeaderField: "Content-Type")
-        request.httpBody = body.data(using: String.Encoding.utf8)
-        
-        if self.logging {
-            print("Sending \(_httpMethod.rawValue) request to endpoint \(url)")
-            print("ContentType : \(contentType)")
-            print("Body: \(body)")
-        }
-        
-        let task = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
-            guard error == nil && data != nil else {                                                          // check for fundamental networking error
-                print("error=\(String(describing: error))")
-                return
-            }
-            let httpResponse = response as? HTTPURLResponse
-            
-            if (httpResponse?.statusCode != 200) {
-                do{
-                    let decoder = JSONDecoder.init()
-                    let apiresponse = try decoder.decode(TriprAPIStatusResponse.self, from: data!)
-                    if self.logging {
-                        do{
-                            print("Retreived response for endpoint \(url)")
-                            print("Response code: \(apiresponse.status) error: \(String(describing: apiresponse.error))")
-                            print("Body: \(try JSONSerialization.jsonObject(with: data!))")
-                        }catch{
-                        }
-                    }
-                    result(TriprAPIDataResponse.init(data: nil, response: apiresponse))
-                }catch{
-                }
-                return
-            }
-            do{
-            if self.logging {
-                print("Retreived response for endpoint \(url)")
-                print("Response code \(String(describing: httpResponse!.statusCode))")
-                print("Body: \(try JSONSerialization.jsonObject(with: data!))")
-            }
-            }catch{
-            }
-            let resp = TriprAPIDataResponse.init(data: data!,response: TriprAPIStatusResponse.init(status: 200, error: ""))
-            result(resp)
-            
-            
-        }
-        task.resume()
+
     }
     
 }

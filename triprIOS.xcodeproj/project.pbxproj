@@ -19,6 +19,7 @@
 		3576E74B1FFB8326005A8BCB /* TriprAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3576E74A1FFB8326005A8BCB /* TriprAPI.swift */; };
 		3576E74E1FFB8874005A8BCB /* TriprUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3576E74D1FFB8874005A8BCB /* TriprUser.swift */; };
 		3576E7501FFBBD17005A8BCB /* TriprAPIMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3576E74F1FFBBD17005A8BCB /* TriprAPIMessages.swift */; };
+		3594BB6D20096D91000CB300 /* TriprAPIPayloadMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3594BB6C20096D91000CB300 /* TriprAPIPayloadMessages.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		3576E74A1FFB8326005A8BCB /* TriprAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprAPI.swift; sourceTree = "<group>"; };
 		3576E74D1FFB8874005A8BCB /* TriprUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprUser.swift; sourceTree = "<group>"; };
 		3576E74F1FFBBD17005A8BCB /* TriprAPIMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprAPIMessages.swift; sourceTree = "<group>"; };
+		3594BB6C20096D91000CB300 /* TriprAPIPayloadMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprAPIPayloadMessages.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,8 +88,9 @@
 				355F3DD920074AE900D83351 /* Reachability.swift */,
 				3576E74C1FFB8866005A8BCB /* TriprModels */,
 				3576E74A1FFB8326005A8BCB /* TriprAPI.swift */,
-				3576E74F1FFBBD17005A8BCB /* TriprAPIMessages.swift */,
 				355F3DD72007480A00D83351 /* TriprAPIService.swift */,
+				3576E74F1FFBBD17005A8BCB /* TriprAPIMessages.swift */,
+				3594BB6C20096D91000CB300 /* TriprAPIPayloadMessages.swift */,
 			);
 			path = TriprApi;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 				3518133D20002BF700F6F7CF /* TriprFeed.swift in Sources */,
 				3576E7501FFBBD17005A8BCB /* TriprAPIMessages.swift in Sources */,
 				355F3DD82007480A00D83351 /* TriprAPIService.swift in Sources */,
+				3594BB6D20096D91000CB300 /* TriprAPIPayloadMessages.swift in Sources */,
 				355F3DDA20074AE900D83351 /* Reachability.swift in Sources */,
 				3576E74E1FFB8874005A8BCB /* TriprUser.swift in Sources */,
 				3576E7351FFB8176005A8BCB /* AppDelegate.swift in Sources */,
