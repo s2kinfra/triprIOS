@@ -9,6 +9,7 @@
 import Foundation
 
 struct triprAPIMessage : TriprAPIServiceMessage {
+    var messageId: String
     var contentType: httpContentTypes
     var timestamp: Double
     var payload: String
@@ -16,7 +17,7 @@ struct triprAPIMessage : TriprAPIServiceMessage {
     var queable: Bool
     var priority: TriprAPIMessagePriority
     var sent: Bool
-    
+    var reference : String?
     let apiService = TriprAPIService.sharedInstance
     var httpMethod : httpMethod
     var attachment : Data?
@@ -31,6 +32,7 @@ struct triprAPIMessage : TriprAPIServiceMessage {
             self.URL = URL
             self.queable = quable
             self.priority = priority
+            self.messageId = UUID.init().uuidString
         } catch {
             return nil
         }

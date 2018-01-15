@@ -17,7 +17,7 @@ struct TriprAPIDataResponse {
 }
 
 struct TriprAPIStatusResponse : Codable{
-    var status : Int
+    var status : httpResponseStatusCode
     var error : String?
 }
 
@@ -117,7 +117,7 @@ final class TriprAPI {
             throw VendingMachineError.outOfStock
         }
         try message.sendMessage(response: { (response) in
-            
+             print(response.response.status)
             })
     }
     
@@ -137,20 +137,34 @@ final class TriprAPI {
     func testError(httpMethod : httpMethod = .POST) throws {
         switch httpMethod {
         case .GET:
-            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_get(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_get(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (reponse) in
-                
+            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_get(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_get(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (response) in
+                guard let data = response.data else {
+                    return
+                }
+                print("\(String(describing: String.init(data: data, encoding: .utf8)))")
             })
            
         case .POST:
-            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_post(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_post(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (reponse) in
-                
+            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_post(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_post(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (response) in
+                guard let data = response.data else {
+                    return
+                }
+                print("\(String(describing: String.init(data: data, encoding: .utf8)))")
             })
         case .PUT:
-            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_put(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_put(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (reponse) in
+            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_put(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_put(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (response) in
+                guard let data = response.data else {
+                    return
+                }
+                print("\(String(describing: String.init(data: data, encoding: .utf8)))")
                 
             })
         case .DELETE:
-            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_delete(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_delete(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (reponse) in
+            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_delete(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_delete(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (response) in
+                guard let data = response.data else {
+                    return
+                }
+                print("\(String(describing: String.init(data: data, encoding: .utf8)))")
                 
             })
         }

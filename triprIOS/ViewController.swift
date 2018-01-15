@@ -27,9 +27,10 @@ class ViewController: UIViewController {
     
     @IBAction func login(_ sender: Any) {
         do {
-            try api.loginUser(username: username.text!, password: password.text!) { (response, user) in
-            print(response)
-        }
+            //try api.loginUser(username: username.text!, password: password.text!) { (response, user) in
+            try api.testError(httpMethod: .POST)
+            //print(response)
+        //}
         }catch{
 
         }
