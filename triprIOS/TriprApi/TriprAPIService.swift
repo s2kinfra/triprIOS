@@ -70,32 +70,12 @@ enum httpResponseStatusCode : Int, Codable {
     
 }
 
-enum TriprAPIMessagePriority : Int {
-    case low = 0, medium, high
-}
-
-protocol TriprAPIServiceMessage {
-    
-    var queable : Bool {get}
-    var messageId : String { get set }
-    var reference : String? {get set}
-    var priority : TriprAPIMessagePriority { get }
-    var sent : Bool { get set }
-    var timestamp : Double { get }
-    var payload : String { get }
-    var URL : String { get }
-    var httpMethod : httpMethod { get }
-    var contentType : httpContentTypes { get }
-    
-    
-}
-
 class TriprAPIService {
     
     static let sharedInstance = TriprAPIService.init()
     let reachability = Reachability()!
     var isInternetAvailable : Bool = false
-    var messageQueue = [TriprAPIServiceMessage]()
+    var messageQueue = [triprAPIMessage]()
     
     private init() {
         
@@ -113,7 +93,7 @@ class TriprAPIService {
         }
     }
     
-    func sendMessage(message: TriprAPIServiceMessage, APIresponse : @escaping (TriprAPIDataResponse)->Void) throws
+    func sendMessage(message: triprAPIMessage, APIresponse : @escaping (TriprAPIResponseMessage)->Void) throws
     {
         
         if !self.isInternetAvailable {
@@ -135,21 +115,46 @@ class TriprAPIService {
             }
            // let httpResponse = response as? HTTPURLResponse
             guard let status = httpResponseStatusCode.init(rawValue: ((response as? HTTPURLResponse)?.statusCode)!) else {
+                print("missing statuscode")
                 return
             }
             
             if status.isErrorCode {
+                let errorResponse = TriprAPIResponseMessage.init(messageId: message.messageId,
+                                                                             timestamp: message.timestamp,
+                                                                             payload: message.payload,
+                                                                             URI: message.URL,
+                                                                             priority: message.priority.rawValue,
+                                                                             reference: message.messageId,
+                                                                             attachment: nil,
+                                                                             status: triprAPIResponseStatusMessageData.init(code: .error,
+                                                                                                                            text: "Request failed, server responded with \(status.code_text) (\(status.rawValue))"))
+                APIresponse(errorResponse)
+                return
+            }else{
                 do{
                     let decoder = JSONDecoder.init()
-                    let apiresponse = try decoder.decode(TriprAPIStatusResponse.self, from: data!)
-                    APIresponse(TriprAPIDataResponse.init(data: nil, response: apiresponse))
-                }catch{
+                    let apiresponse = try decoder.decode(TriprAPIResponseMessage.self, from: data!)
+                    APIresponse(apiresponse)
+                }catch {
+                    print("couldnt decode response")
                 }
-                return
             }
             
-            let resp = TriprAPIDataResponse.init(data: data!,response: TriprAPIStatusResponse.init(status: status, error: ""))
-            APIresponse(resp)
+           
+            
+//            if status.isErrorCode {
+//                do{
+//                    let decoder = JSONDecoder.init()
+//                    let apiresponse = try decoder.decode(TriprAPIStatusResponse.self, from: data!)
+//                    APIresponse(apiresponse)
+//                }catch{
+//                    print("couldnt decode response")
+//                }
+//            }
+//
+//            let resp = TriprAPIStatusResponse.init(data: data!,response: TriprAPIStatusResponse.init(status: status, error: ""))
+//            APIresponse(apiresponse)
         }
         task.resume()
     }

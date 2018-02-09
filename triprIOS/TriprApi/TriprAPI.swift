@@ -11,15 +11,8 @@ import Foundation
 enum APIEnviroment {
     case PROD, TEST, DEV
 }
-struct TriprAPIDataResponse {
-    var data : Data?
-    var response : TriprAPIStatusResponse
-}
 
-struct TriprAPIStatusResponse : Codable{
-    var status : httpResponseStatusCode
-    var error : String?
-}
+
 
 enum VendingMachineError: Error {
     case invalidSelection
@@ -29,11 +22,11 @@ enum VendingMachineError: Error {
 
 enum triprAPIEndpointURLs {
     case user_login(baseURL : String),
-         user_register(baseURL : String),
-         error_test_get(baseURL : String),
-         error_test_put(baseURL : String),
-         error_test_delete(baseURL : String),
-         error_test_post(baseURL : String)
+    user_register(baseURL : String),
+    error_test_get(baseURL : String),
+    error_test_put(baseURL : String),
+    error_test_delete(baseURL : String),
+    error_test_post(baseURL : String)
     
     var method : httpMethod {
         switch self {
@@ -79,9 +72,9 @@ final class TriprAPI {
     private init(apikey: String, enviroment: APIEnviroment = .DEV) {
         switch enviroment {
         case .PROD:
-           baseURL = "http://fabularis.dk:8081/api/v1"
+            baseURL = "http://fabularis.dk:8081/api/v1"
         default:
-           baseURL = "http://localhost:8080/api/v1"
+            baseURL = "http://localhost:8080/api/v1"
         }
         self.apiKey = apikey
     }
@@ -108,67 +101,97 @@ final class TriprAPI {
         return self.enviroment
     }
     
-    func loginUser(username: String, password: String, completionHandler: (TriprAPIStatusResponse, TriprUser?)->Void ) throws {
+    func loginUser(username: String, password: String, completionHandler: @escaping (TriprAPIResponseMessage, TriprUser?)->Void ) throws {
         
-        let bodyLoginUser = triprMessageUserLogin.init(email: username, password: password)
+        let request = triprMessageUserLogin.init(username: username, password: password)
         
-    
-        guard let message = triprAPIMessage.init(payload: bodyLoginUser, httpMethod: triprAPIEndpointURLs.user_login(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.user_login(baseURL: baseURL).url, quable: true, priority: .high) else {
+        guard let message = triprAPIMessage.init(payload: request, httpMethod: triprAPIEndpointURLs.user_login(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.user_login(baseURL: baseURL).url, quable: false, priority: .high) else {
             throw VendingMachineError.outOfStock
         }
-        try message.sendMessage(response: { (response) in
-             print(response.response.status)
-            })
+        
+        try message.sendMessage(response: { (apiResponse) in
+            if apiResponse.status.code == .error {
+                completionHandler(apiResponse, nil)
+            }else {
+                do {
+                    let decoder = JSONDecoder.init()
+                    let user = try decoder.decode(TriprUser.self, from: apiResponse.payload.data(using: .utf8)!)
+                    completionHandler(apiResponse,user)
+                }catch {
+                    do {
+                        print(try apiResponse.payload.prettyPrintJSONString())
+                        print("something fucked up")
+                    }catch {
+                        print(apiResponse)
+                    }
+                }
+            }
+        })
     }
     
-    func registerUser(username _username: String, email _email : String, firstname _firstname : String, lastname _lastname : String, password _password : String, completionHandler: @escaping (TriprAPIStatusResponse, TriprUser?)->Void) throws {
+    func registerUser(username _username: String, email _email : String, firstname _firstname : String, lastname _lastname : String, password _password : String, completionHandler: @escaping (TriprAPIResponseMessage, TriprUser?)->Void) throws {
+        let request = triprMessageUserRegister.init(username: _username, firstname: _firstname, lastname: _lastname, password: _password, email: _email)
         
-        let bodyRegisterUser = triprMessageUserRegister.init(username: _username, firstname: _firstname, lastname: _lastname, password: _password, email: _email)
-        
-        guard let message = triprAPIMessage.init(payload: bodyRegisterUser, httpMethod: triprAPIEndpointURLs.user_register(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.user_register(baseURL: baseURL).url, quable: true, priority: .high) else {
+        guard let message = triprAPIMessage.init(payload: request, httpMethod: triprAPIEndpointURLs.user_register(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.user_register(baseURL: baseURL).url, quable: true, priority: .high) else {
             throw VendingMachineError.invalidSelection
         }
-        try message.sendMessage { (apiResponse) in
+        try message.sendMessage{ (apiResponse) in
             
+            if apiResponse.status.code == .error {
+                completionHandler(apiResponse, nil)
+            }else {
+                do {
+                    let decoder = JSONDecoder.init()
+                    let user = try decoder.decode(TriprUser.self, from: apiResponse.payload.data(using: .utf8)!)
+                    completionHandler(apiResponse,user )
+                }catch {
+                    do {
+                        print(try apiResponse.payload.prettyPrintJSONString())
+                        print("something fucked up")
+                    }catch {
+                        print(apiResponse)
+                    }
+                }
+            }
         }
         
     }
     
     func testError(httpMethod : httpMethod = .POST) throws {
-        switch httpMethod {
-        case .GET:
-            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_get(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_get(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (response) in
-                guard let data = response.data else {
-                    return
-                }
-                print("\(String(describing: String.init(data: data, encoding: .utf8)))")
-            })
-           
-        case .POST:
-            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_post(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_post(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (response) in
-                guard let data = response.data else {
-                    return
-                }
-                print("\(String(describing: String.init(data: data, encoding: .utf8)))")
-            })
-        case .PUT:
-            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_put(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_put(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (response) in
-                guard let data = response.data else {
-                    return
-                }
-                print("\(String(describing: String.init(data: data, encoding: .utf8)))")
-                
-            })
-        case .DELETE:
-            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_delete(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_delete(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (response) in
-                guard let data = response.data else {
-                    return
-                }
-                print("\(String(describing: String.init(data: data, encoding: .utf8)))")
-                
-            })
-        }
-
+        //        switch httpMethod {
+        //        case .GET:
+        //            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_get(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_get(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (response) in
+        //                guard let data = response.data else {
+        //                    return
+        //                }
+        //                print("\(String(describing: String.init(data: data, encoding: .utf8)))")
+        //            })
+        //
+        //        case .POST:
+        //            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_post(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_post(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (response) in
+        //                guard let data = response.data else {
+        //                    return
+        //                }
+        //                print("\(String(describing: String.init(data: data, encoding: .utf8)))")
+        //            })
+        //        case .PUT:
+        //            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_put(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_put(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (response) in
+        //                guard let data = response.data else {
+        //                    return
+        //                }
+        //                print("\(String(describing: String.init(data: data, encoding: .utf8)))")
+        //
+        //            })
+        //        case .DELETE:
+        //            try triprAPIMessage.init(payload: triprMessageDummy(), httpMethod: triprAPIEndpointURLs.error_test_delete(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.error_test_delete(baseURL: baseURL).url, quable: false, priority: .low)?.sendMessage(response: { (response) in
+        //                guard let data = response.data else {
+        //                    return
+        //                }
+        //                print("\(String(describing: String.init(data: data, encoding: .utf8)))")
+        //
+        //            })
+        //        }
+        
     }
     
 }
