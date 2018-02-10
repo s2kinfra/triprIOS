@@ -26,7 +26,8 @@ enum triprAPIEndpointURLs {
     error_test_get(baseURL : String),
     error_test_put(baseURL : String),
     error_test_delete(baseURL : String),
-    error_test_post(baseURL : String)
+    error_test_post(baseURL : String),
+    public_img_get(baseURL: String)
     
     var method : httpMethod {
         switch self {
@@ -40,6 +41,8 @@ enum triprAPIEndpointURLs {
             return .DELETE
         case .error_test_put:
             return .PUT
+        case .public_img_get:
+            return .GET
         default:
             return .GET
         }
@@ -59,6 +62,8 @@ enum triprAPIEndpointURLs {
             return "\(baseURL)/error"
         case .error_test_delete(let baseURL):
             return "\(baseURL)/error"
+        case .public_img_get(let baseURL):
+            return "\(baseURL)"
         }
     }
 }
@@ -67,14 +72,17 @@ final class TriprAPI {
     
     static let sharedInstance = TriprAPI.init(apikey: "ios")
     
+    var publicFolder : String
     var baseURL : String
     // Initialization
     private init(apikey: String, enviroment: APIEnviroment = .DEV) {
         switch enviroment {
         case .PROD:
             baseURL = "http://fabularis.dk:8081/api/v1"
+            publicFolder = "http://fabularis.dk:8081"
         default:
             baseURL = "http://localhost:8080/api/v1"
+            publicFolder = "http://localhost:8080"
         }
         self.apiKey = apikey
     }
@@ -86,8 +94,10 @@ final class TriprAPI {
             switch newValue {
             case .PROD:
                 baseURL = "http://fabularis.dk:8081/api/v1"
+                publicFolder = "http://fabularis.dk:8081"
             default:
                 baseURL = "http://localhost:8080/api/v1"
+                publicFolder = "http://localhost:8080"
             }
         }
     }
@@ -127,6 +137,16 @@ final class TriprAPI {
                 }
             }
         })
+    }
+    
+    func getImageDataFromAPI(url : String,completionHandler: @escaping (Data)->Void) throws {
+        URLSession.shared.dataTask(with: URL.init(string: "\(publicFolder)\(url)")!) { data, response, error in
+            guard error == nil && data != nil else {                                                          // check for fundamental networking error
+                print("error=\(String(describing: error))")
+                return
+            }
+            completionHandler(data!)
+        }.resume()
     }
     
     func registerUser(username _username: String, email _email : String, firstname _firstname : String, lastname _lastname : String, password _password : String, completionHandler: @escaping (TriprAPIResponseMessage, TriprUser?)->Void) throws {

@@ -39,13 +39,13 @@ class RegisterUserViewController: UIViewController {
                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { action in
                             switch action.style{
                             case .default :
-                                self.cancel(self)
+                                self.performSegue(withIdentifier: "loggedIn", sender: self)
                                 
                             case .cancel:
-                                self.cancel(self)
+                                self.performSegue(withIdentifier: "loggedIn", sender: self)
                                 
                             case .destructive:
-                                self.cancel(self)
+                                self.performSegue(withIdentifier: "loggedIn", sender: self)
                             }
                             
                         }))

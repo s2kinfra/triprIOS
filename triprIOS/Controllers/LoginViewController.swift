@@ -8,11 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class LoginViewController: UIViewController {
 
     
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +28,11 @@ class ViewController: UIViewController {
     
     @IBAction func login(_ sender: Any) {
         do {
+            self.activityIndicator.startAnimating()
             try api.loginUser(username: username.text!, password: password.text!, completionHandler: { (response, user) in
                 if response.status.code == .error {
                     DispatchQueue.main.async {
+                        self.activityIndicator.stopAnimating()
                         let alert = UIAlertController(title: "Failed to login user", message: response.status.text, preferredStyle: UIAlertControllerStyle.alert)
                         alert.addAction(UIAlertAction(title: "Ok", style: .default))
                         self.present(alert, animated: true, completion: nil)
@@ -37,9 +40,10 @@ class ViewController: UIViewController {
                 }else {
                     api.currentUser = user
                     DispatchQueue.main.async {
+                        self.activityIndicator.stopAnimating()
                         let alert = UIAlertController(title: "User logged in", message: "Welcome back \(api.currentUser!.firstname) \(api.currentUser!.lastname)", preferredStyle: UIAlertControllerStyle.alert)
                         alert.addAction(UIAlertAction(title: "Ok", style: .default))
-                        self.present(alert, animated: true, completion: nil)
+                        self.performSegue(withIdentifier: "loggedIn", sender: self)
                     }
                 }
                 
@@ -49,5 +53,13 @@ class ViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "loggedIn"
+        {
+            if let destinationVC = segue.destination as? ProfileViewController {
+                destinationVC.displayedUser = api.currentUser
+            }
+        }
+    }
 }
 
