@@ -12,6 +12,47 @@ struct triprMessageDummy: triprPayloadMessage {
     
 }
 
+
+class triprMessageUserTimeline : triprAPIRequestMessage {
+    
+    struct triprMessageUserTimelinePayload : Codable {
+        var startIndex : Int = 0
+        var numberOfFeeds : Int = 25
+        
+        init(startIndex _index : Int, numberOfFeeds _feeds : Int) {
+            self.startIndex = _index
+            self.numberOfFeeds = _feeds
+        }
+    }
+    
+    var payload : triprMessageUserTimelinePayload
+    
+    init(startIndex _index : Int, numberOfFeeds _feeds : Int) {
+        self.payload = triprMessageUserTimelinePayload.init(startIndex: _index, numberOfFeeds: _feeds)
+        
+        super.init()
+    }
+    
+    private enum CodingKeys : String, CodingKey {
+        case payload
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(payload, forKey: .payload)
+    }
+    
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.payload = try container.decode(triprMessageUserTimelinePayload.self, forKey: .payload)
+        try super.init(from: decoder)
+        
+    }
+    
+}
+
 class triprMessageUserRegister : triprAPIRequestMessage {
     
     struct triprMessageUserRegisterPayload : Codable{

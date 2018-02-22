@@ -5,9 +5,6 @@
 //  Created by Daniel Skevarp on 2018-01-02.
 //  Copyright © 2018 Daniel Skevarp. All rights reserved.
 //
-
-
-
 struct TriprUser : Codable{
     
     var username: String = ""

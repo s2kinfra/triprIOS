@@ -23,17 +23,21 @@ enum VendingMachineError: Error {
 enum triprAPIEndpointURLs {
     case user_login(baseURL : String),
     user_register(baseURL : String),
+    user_timeline(baseURL : String),
     error_test_get(baseURL : String),
     error_test_put(baseURL : String),
     error_test_delete(baseURL : String),
     error_test_post(baseURL : String),
     public_img_get(baseURL: String)
     
+    
     var method : httpMethod {
         switch self {
         case .user_login:
             return .POST
         case .user_register:
+            return .POST
+        case .user_timeline:
             return .POST
         case .error_test_post:
             return .POST
@@ -54,6 +58,8 @@ enum triprAPIEndpointURLs {
             return "\(baseURL)/user/login"
         case .user_register(let baseURL):
             return "\(baseURL)/user/register"
+        case .user_timeline(let baseURL):
+            return "\(baseURL)/user/timeline"
         case .error_test_get(let baseURL):
             return "\(baseURL)/error"
         case .error_test_post(let baseURL) :
@@ -137,6 +143,39 @@ final class TriprAPI {
                 }
             }
         })
+    }
+    
+    func getUserTimeline(startIndex _index : Int, numberOfFeeds _feeds : Int,completionHandler: @escaping ([TriprTimeline])->Void) throws {
+        
+        let request = triprMessageUserTimeline.init(startIndex: _index, numberOfFeeds: _feeds)
+        
+        guard let message = triprAPIMessage.init(payload: request, httpMethod: triprAPIEndpointURLs.user_timeline(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.user_timeline(baseURL: baseURL).url, quable: true, priority: .high) else {
+            throw VendingMachineError.invalidSelection
+        }
+        try message.sendMessage{ (apiResponse) in
+            
+            if apiResponse.status.code == .error {
+                completionHandler([TriprTimeline]())
+            }else {
+                do {
+                    let decoder = JSONDecoder.init()
+                    let timelines = try decoder.decode([TriprTimeline].self, from: apiResponse.payload.data(using: .utf8)!)
+                   
+                    completionHandler(timelines)
+                }catch let error {
+                    do {
+                        print(try apiResponse.payload.prettyPrintJSONString())
+                        print("something fucked up")
+                        print(error.localizedDescription)
+                        let error2 : DecodingError = error as! DecodingError
+                        print(error2)
+                    }catch {
+                        print(apiResponse)
+                    }
+                }
+            }
+        }
+        
     }
     
     func getImageDataFromAPI(url : String,completionHandler: @escaping (Data)->Void) throws {

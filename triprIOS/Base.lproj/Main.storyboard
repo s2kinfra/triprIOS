@@ -295,6 +295,35 @@
             <point key="canvasLocation" x="1924" y="384.55772113943033"/>
         </scene>
         <!--Timeline-->
+        <scene sceneID="HBl-DD-15X">
+            <objects>
+                <tableViewController id="E9F-Lv-x1d" customClass="TimelineTableViewController" customModule="triprIOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="NWf-Xr-q57">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="PHT-YM-fk5">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PHT-YM-fk5" id="x5s-eM-YGH">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="E9F-Lv-x1d" id="nvV-uY-aKY"/>
+                            <outlet property="delegate" destination="E9F-Lv-x1d" id="ZYs-5Y-etM"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Timeline" id="tHD-XZ-ZRa"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0vG-d0-ZPK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1935" y="-971"/>
+        </scene>
+        <!--Something else-->
         <scene sceneID="zWK-y5-gtK">
             <objects>
                 <viewController id="erH-5c-Q3R" sceneMemberID="viewController">
@@ -304,7 +333,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="d1M-P6-uUJ"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Timeline" id="IpB-iE-Zq9"/>
+                    <tabBarItem key="tabBarItem" title="Something else" id="IpB-iE-Zq9"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FfK-WZ-SG0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -322,6 +351,7 @@
                     <connections>
                         <segue destination="erH-5c-Q3R" kind="relationship" relationship="viewControllers" id="kZc-zW-kzu"/>
                         <segue destination="SpT-ct-dgJ" kind="relationship" relationship="viewControllers" id="PZF-wV-6MW"/>
+                        <segue destination="E9F-Lv-x1d" kind="relationship" relationship="viewControllers" id="h7F-NK-Lvf"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wFG-d7-37U" userLabel="First Responder" sceneMemberID="firstResponder"/>
