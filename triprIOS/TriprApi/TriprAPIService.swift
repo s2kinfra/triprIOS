@@ -111,6 +111,17 @@ class TriprAPIService {
         let task = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
             guard error == nil && data != nil else {                                                          // check for fundamental networking error
                 print("error=\(String(describing: error))")
+                let errorMessage = TriprAPIResponseMessage.init(messageId: message.messageId,
+                                                                 timestamp: message.timestamp,
+                                                                 payload: message.payload,
+                                                                 URI: message.URL,
+                                                                 priority: message.priority.rawValue,
+                                                                 reference: message.messageId,
+                                                                 attachment: nil,
+                                                                 status: triprAPIResponseStatusMessageData.init(code: .error,
+                                                                                                                text: "\(error!.localizedDescription)"))
+                APIresponse(errorMessage)
+                
                 return
             }
            // let httpResponse = response as? HTTPURLResponse
@@ -140,21 +151,6 @@ class TriprAPIService {
                     print("couldnt decode response")
                 }
             }
-            
-           
-            
-//            if status.isErrorCode {
-//                do{
-//                    let decoder = JSONDecoder.init()
-//                    let apiresponse = try decoder.decode(TriprAPIStatusResponse.self, from: data!)
-//                    APIresponse(apiresponse)
-//                }catch{
-//                    print("couldnt decode response")
-//                }
-//            }
-//
-//            let resp = TriprAPIStatusResponse.init(data: data!,response: TriprAPIStatusResponse.init(status: status, error: ""))
-//            APIresponse(apiresponse)
         }
         task.resume()
     }

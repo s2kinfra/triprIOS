@@ -12,7 +12,7 @@ import Foundation
 struct TriprComment : Codable {
     
     var text : String
-    var writtenBy : Int
+    var writtenBy : TriprUser
     var commentedObject : String
     var commentedObjectId : Int
     var id : Int

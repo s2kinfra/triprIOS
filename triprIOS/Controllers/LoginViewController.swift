@@ -17,6 +17,12 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let defaults = UserDefaults.standard
+        if defaults.string(forKey: "username") != nil {
+            self.username.text = defaults.string(forKey: "username")
+            self.password.text = defaults.string(forKey: "password")
+            self.login(self)
+        }
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -41,6 +47,9 @@ class LoginViewController: UIViewController {
                     api.currentUser = user
                     DispatchQueue.main.async {
                         self.activityIndicator.stopAnimating()
+                        let defaults = UserDefaults.standard
+                        defaults.set(self.username.text!, forKey : "username")
+                        defaults.set(self.password.text!, forKey : "password")
                         let alert = UIAlertController(title: "User logged in", message: "Welcome back \(api.currentUser!.firstname) \(api.currentUser!.lastname)", preferredStyle: UIAlertControllerStyle.alert)
                         alert.addAction(UIAlertAction(title: "Ok", style: .default))
                         self.performSegue(withIdentifier: "loggedIn", sender: self)

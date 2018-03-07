@@ -14,10 +14,10 @@ struct TriprUser : Codable{
     var id : Int
     var isPrivate : Int = 0
     
-    var followers : [Follow] = [Follow]()
-    var following : [Follow] = [Follow]()
-    var followerRequests : [Follow] = [Follow]()
-    var followingRequests : [Follow] = [Follow]()
+    var followers : [Follow]?
+    var following : [Follow]?
+    var followerRequests : [Follow]?
+    var followingRequests : [Follow]?
     
     var profileImage : TriprFile = TriprFile()
    

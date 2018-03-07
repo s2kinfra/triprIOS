@@ -24,20 +24,24 @@ enum FeedType : Int, Codable {
 struct timelineEntryObject : Codable {
     var trip : TriprTrip?
     var comment : TriprComment?
+    var user : TriprUser?
     
-    init(trip _trip : TriprTrip? , comment _comment : TriprComment? ) {
+    init(trip _trip : TriprTrip? , comment _comment : TriprComment?, user _user : TriprUser?) {
         self.trip = _trip
         self.comment = _comment
+        self.user = _user
     }
 }
 
 struct timelineFeedObject : Codable {
     var trip : TriprTrip?
     var comment : TriprComment?
+    var user : TriprUser?
     
-    init(trip _trip : TriprTrip? , comment _comment : TriprComment? ) {
+    init(trip _trip : TriprTrip? , comment _comment : TriprComment?, user _user : TriprUser?) {
         self.trip = _trip
         self.comment = _comment
+        self.user = _user
     }
 }
 

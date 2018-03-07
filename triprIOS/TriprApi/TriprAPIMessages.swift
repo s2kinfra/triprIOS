@@ -22,10 +22,14 @@ struct triprAPIMessage {
     var httpMethod : httpMethod
     var attachment : Data?
     
-    init?(payload : triprAPIRequestMessage, httpMethod : httpMethod, contentType: httpContentTypes, URL : String, quable : Bool, priority : TriprAPIMessagePriority) {
+    init?(payload : triprAPIRequestMessage?, httpMethod : httpMethod, contentType: httpContentTypes, URL : String, quable : Bool, priority : TriprAPIMessagePriority) {
         do {
             self.timestamp = Date().timeIntervalSince1970
-            self.payload = try payload.getPayloadString()
+            if let pay = payload {
+                self.payload = try pay.getPayloadString()
+            }else {
+                self.payload = ""
+            }
             self.sent = false
             self.contentType = contentType
             self.httpMethod = httpMethod

@@ -23,7 +23,9 @@ enum VendingMachineError: Error {
 enum triprAPIEndpointURLs {
     case user_login(baseURL : String),
     user_register(baseURL : String),
+    user_logout(baseURL : String),
     user_timeline(baseURL : String),
+    trip_get_users(baseURL : String, username: String),
     error_test_get(baseURL : String),
     error_test_put(baseURL : String),
     error_test_delete(baseURL : String),
@@ -37,8 +39,12 @@ enum triprAPIEndpointURLs {
             return .POST
         case .user_register:
             return .POST
+        case .user_logout:
+            return .GET
         case .user_timeline:
             return .POST
+        case .trip_get_users:
+            return .GET
         case .error_test_post:
             return .POST
         case .error_test_delete:
@@ -56,10 +62,14 @@ enum triprAPIEndpointURLs {
         switch self {
         case .user_login(let baseURL):
             return "\(baseURL)/user/login"
+        case .user_logout(let baseURL):
+            return "\(baseURL)/user/logout"
         case .user_register(let baseURL):
             return "\(baseURL)/user/register"
         case .user_timeline(let baseURL):
             return "\(baseURL)/user/timeline"
+        case .trip_get_users(let baseURL, let username):
+            return "\(baseURL)/trip/forUser/\(username)"
         case .error_test_get(let baseURL):
             return "\(baseURL)/error"
         case .error_test_post(let baseURL) :
@@ -117,6 +127,21 @@ final class TriprAPI {
         return self.enviroment
     }
     
+    func logoutUset( completionHandler: @escaping (TriprAPIResponseMessage)->Void) throws {
+        
+        guard let message = triprAPIMessage.init(payload: nil, httpMethod: triprAPIEndpointURLs.user_logout(baseURL: baseURL).method, contentType: .json, URL: triprAPIEndpointURLs.user_logout(baseURL: baseURL).url, quable: false, priority: .high) else {
+            throw VendingMachineError.outOfStock
+        }
+        
+        try message.sendMessage(response: { (apiResponse) in
+            if apiResponse.status.code == .error {
+                completionHandler(apiResponse)
+            }else {
+                completionHandler(apiResponse)
+            }
+        })
+    }
+    
     func loginUser(username: String, password: String, completionHandler: @escaping (TriprAPIResponseMessage, TriprUser?)->Void ) throws {
         
         let request = triprMessageUserLogin.init(username: username, password: password)
@@ -160,7 +185,7 @@ final class TriprAPI {
                 do {
                     let decoder = JSONDecoder.init()
                     let timelines = try decoder.decode([TriprTimeline].self, from: apiResponse.payload.data(using: .utf8)!)
-                   
+                    
                     completionHandler(timelines)
                 }catch let error {
                     do {
@@ -185,7 +210,7 @@ final class TriprAPI {
                 return
             }
             completionHandler(data!)
-        }.resume()
+            }.resume()
     }
     
     func registerUser(username _username: String, email _email : String, firstname _firstname : String, lastname _lastname : String, password _password : String, completionHandler: @escaping (TriprAPIResponseMessage, TriprUser?)->Void) throws {
@@ -214,6 +239,31 @@ final class TriprAPI {
             }
         }
         
+    }
+    
+    func getUsersTrips(user _user : String, completionHandler: @escaping (TriprAPIResponseMessage, [TriprTrip])->Void) throws {
+        guard let message = triprAPIMessage.init(payload: nil, httpMethod: triprAPIEndpointURLs.trip_get_users(baseURL: baseURL,username: _user).method, contentType: .json, URL: triprAPIEndpointURLs.trip_get_users(baseURL: baseURL, username: _user).url, quable: true, priority: .high) else {
+            throw VendingMachineError.invalidSelection
+        }
+        try message.sendMessage{ (apiResponse) in
+            
+            if apiResponse.status.code == .error {
+                completionHandler(apiResponse, [TriprTrip]())
+            }else {
+                do {
+                    let decoder = JSONDecoder.init()
+                    let trips = try decoder.decode([TriprTrip].self, from: apiResponse.payload.data(using: .utf8)!)
+                    completionHandler(apiResponse,trips )
+                }catch {
+                    do {
+                        print(try apiResponse.payload.prettyPrintJSONString())
+                        print("something fucked up")
+                    }catch {
+                        print(apiResponse)
+                    }
+                }
+            }
+        }
     }
     
     func testError(httpMethod : httpMethod = .POST) throws {

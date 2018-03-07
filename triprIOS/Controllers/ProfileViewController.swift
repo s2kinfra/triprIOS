@@ -26,6 +26,24 @@ class ProfileViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func logoutUser(_ sender: Any) {
+        do{
+            try api.logoutUset(completionHandler: { apiresponse in
+                if apiresponse.status.code == .ok {
+                    DispatchQueue.main.async {
+                        let defaults = UserDefaults.standard
+                        defaults.set("", forKey: "username")
+                        defaults.set("", forKey: "password")
+                        //Remove user credentials
+                        let rootController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "LoginViewController")
+                        self.present(rootController, animated: true, completion: nil)
+                    }
+                }
+            })
+        }catch let error {
+            print(error.localizedDescription)
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if displayedUser == nil {
@@ -39,8 +57,8 @@ class ProfileViewController: UIViewController {
         self.fullname.text = "\(duser.firstname) \(duser.lastname)"
         self.username.text = duser.username
         self.userid.text = String(describing: duser.id)
-        self.follows.text = String(describing: duser.following.count)
-        self.followers.text = String(describing: duser.followers.count)
+        self.follows.text = String(describing: duser.following?.count)
+        self.followers.text = String(describing: duser.followers?.count)
         do{
             if duser.profileImage.id != storedImage?.id {
                 try api.getImageDataFromAPI(url: (duser.profileImage.path), completionHandler: { (data) in

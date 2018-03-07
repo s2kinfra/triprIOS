@@ -12,7 +12,50 @@ struct triprMessageDummy: triprPayloadMessage {
     
 }
 
+// MARK : Trip Create
+class triprMessageTripCreate : triprAPIRequestMessage {
+    
+    struct triprMessageTripCreatePayload : Codable {
+        var isPrivate : Bool = false
+        var startDate : Double = 0
+        var endDate : Double = 0
+        var name : String = ""
+        
+        init(isPrivate _private : Bool, startDate _start : Double, endDate _end : Double, name _name : String) {
+            self.isPrivate = _private
+            self.startDate = _start
+            self.endDate = _end
+            self.name = _name        }
+    }
+    
+    var payload : triprMessageTripCreatePayload
+    
+    init(isPrivate _private : Bool, startDate _start : Double, endDate _end : Double, name _name : String) {
+        self.payload = triprMessageTripCreatePayload.init(isPrivate: _private, startDate: _start, endDate: _end, name: _name)
+        super.init()
+    }
+    
+    private enum CodingKeys : String, CodingKey {
+        case payload
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(payload, forKey: .payload)
+    }
+    
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.payload = try container.decode(triprMessageTripCreatePayload.self, forKey: .payload)
+        try super.init(from: decoder)
+        
+    }
+    
+}
 
+// MARK : User Timeline
 class triprMessageUserTimeline : triprAPIRequestMessage {
     
     struct triprMessageUserTimelinePayload : Codable {
@@ -53,6 +96,7 @@ class triprMessageUserTimeline : triprAPIRequestMessage {
     
 }
 
+// MARK : User Register
 class triprMessageUserRegister : triprAPIRequestMessage {
     
     struct triprMessageUserRegisterPayload : Codable{
@@ -103,6 +147,7 @@ class triprMessageUserRegister : triprAPIRequestMessage {
     
 }
 
+/// MARK : User login
 class triprMessageUserLogin: triprAPIRequestMessage {
     
     struct triprMessageUserLoginPayload: Codable {

@@ -30,6 +30,12 @@
 		35775FD8202DA69B007494C1 /* TriprFollow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35775FD7202DA69B007494C1 /* TriprFollow.swift */; };
 		35775FDA202DAD79007494C1 /* String+JSONExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35775FD9202DAD79007494C1 /* String+JSONExtension.swift */; };
 		3594BB6D20096D91000CB300 /* TriprAPIPayloadMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3594BB6C20096D91000CB300 /* TriprAPIPayloadMessages.swift */; };
+		35D335B7204E11900056B6B0 /* FeedType20TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D335B6204E11900056B6B0 /* FeedType20TableViewCell.swift */; };
+		35D335BE204E8BE90056B6B0 /* FeedType10TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D335BD204E8BE90056B6B0 /* FeedType10TableViewCell.swift */; };
+		35D335C0204E8C150056B6B0 /* FeedTypeSuperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D335BF204E8C150056B6B0 /* FeedTypeSuperTableViewCell.swift */; };
+		35D335C3204E8E160056B6B0 /* Date+TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D335C2204E8E160056B6B0 /* Date+TimeAgo.swift */; };
+		35EDF20F204F0B5E00A09347 /* TripTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EDF20E204F0B5E00A09347 /* TripTableViewController.swift */; };
+		35EDF213204F11F200A09347 /* tripTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EDF212204F11F200A09347 /* tripTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +64,12 @@
 		35775FD7202DA69B007494C1 /* TriprFollow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprFollow.swift; sourceTree = "<group>"; };
 		35775FD9202DAD79007494C1 /* String+JSONExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+JSONExtension.swift"; sourceTree = "<group>"; };
 		3594BB6C20096D91000CB300 /* TriprAPIPayloadMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprAPIPayloadMessages.swift; sourceTree = "<group>"; };
+		35D335B6204E11900056B6B0 /* FeedType20TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedType20TableViewCell.swift; sourceTree = "<group>"; };
+		35D335BD204E8BE90056B6B0 /* FeedType10TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedType10TableViewCell.swift; sourceTree = "<group>"; };
+		35D335BF204E8C150056B6B0 /* FeedTypeSuperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTypeSuperTableViewCell.swift; sourceTree = "<group>"; };
+		35D335C2204E8E160056B6B0 /* Date+TimeAgo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+TimeAgo.swift"; sourceTree = "<group>"; };
+		35EDF20E204F0B5E00A09347 /* TripTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTableViewController.swift; sourceTree = "<group>"; };
+		35EDF212204F11F200A09347 /* tripTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tripTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +117,7 @@
 		3576E7491FFB8312005A8BCB /* TriprApi */ = {
 			isa = PBXGroup;
 			children = (
+				35D335C1204E8DEE0056B6B0 /* Functions */,
 				355F3DD920074AE900D83351 /* Reachability.swift */,
 				3576E74C1FFB8866005A8BCB /* TriprModels */,
 				3576E74A1FFB8326005A8BCB /* TriprAPI.swift */,
@@ -134,12 +147,57 @@
 		35775FD2202C783D007494C1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				35EDF210204F11D300A09347 /* Trips */,
+				35D335B4204E114E0056B6B0 /* Timeline */,
 				3576E7361FFB8176005A8BCB /* LoginViewController.swift */,
 				35775FD3202C7867007494C1 /* RegisterUserViewController.swift */,
 				3547DADE202DFB1D006A8582 /* ProfileViewController.swift */,
-				3500EC54203CC67A0083DCF6 /* TimelineTableViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		35D335B4204E114E0056B6B0 /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				35D335B5204E11630056B6B0 /* tableviewcells */,
+				3500EC54203CC67A0083DCF6 /* TimelineTableViewController.swift */,
+			);
+			path = Timeline;
+			sourceTree = "<group>";
+		};
+		35D335B5204E11630056B6B0 /* tableviewcells */ = {
+			isa = PBXGroup;
+			children = (
+				35D335B6204E11900056B6B0 /* FeedType20TableViewCell.swift */,
+				35D335BD204E8BE90056B6B0 /* FeedType10TableViewCell.swift */,
+				35D335BF204E8C150056B6B0 /* FeedTypeSuperTableViewCell.swift */,
+			);
+			path = tableviewcells;
+			sourceTree = "<group>";
+		};
+		35D335C1204E8DEE0056B6B0 /* Functions */ = {
+			isa = PBXGroup;
+			children = (
+				35D335C2204E8E160056B6B0 /* Date+TimeAgo.swift */,
+			);
+			path = Functions;
+			sourceTree = "<group>";
+		};
+		35EDF210204F11D300A09347 /* Trips */ = {
+			isa = PBXGroup;
+			children = (
+				35EDF211204F11DA00A09347 /* tripTableViewCells */,
+				35EDF20E204F0B5E00A09347 /* TripTableViewController.swift */,
+			);
+			path = Trips;
+			sourceTree = "<group>";
+		};
+		35EDF211204F11DA00A09347 /* tripTableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				35EDF212204F11F200A09347 /* tripTableViewCell.swift */,
+			);
+			path = tripTableViewCells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,13 +276,17 @@
 				35775FD4202C7867007494C1 /* RegisterUserViewController.swift in Sources */,
 				3576E7371FFB8176005A8BCB /* LoginViewController.swift in Sources */,
 				3518133D20002BF700F6F7CF /* TriprFeed.swift in Sources */,
+				35D335C3204E8E160056B6B0 /* Date+TimeAgo.swift in Sources */,
+				35EDF20F204F0B5E00A09347 /* TripTableViewController.swift in Sources */,
 				3500EC5B203D9D370083DCF6 /* TriprComment.swift in Sources */,
 				35775FD8202DA69B007494C1 /* TriprFollow.swift in Sources */,
 				3576E7501FFBBD17005A8BCB /* TriprAPIMessages.swift in Sources */,
 				355F3DD82007480A00D83351 /* TriprAPIService.swift in Sources */,
 				3500EC57203CC99C0083DCF6 /* TriprTimeline.swift in Sources */,
 				3594BB6D20096D91000CB300 /* TriprAPIPayloadMessages.swift in Sources */,
+				35D335BE204E8BE90056B6B0 /* FeedType10TableViewCell.swift in Sources */,
 				35775FDA202DAD79007494C1 /* String+JSONExtension.swift in Sources */,
+				35D335C0204E8C150056B6B0 /* FeedTypeSuperTableViewCell.swift in Sources */,
 				35775FD6202DA663007494C1 /* TriprFile.swift in Sources */,
 				355F3DDA20074AE900D83351 /* Reachability.swift in Sources */,
 				3500EC59203D9C0D0083DCF6 /* TriprTrip.swift in Sources */,
@@ -232,7 +294,9 @@
 				3547DADF202DFB1D006A8582 /* ProfileViewController.swift in Sources */,
 				3576E7351FFB8176005A8BCB /* AppDelegate.swift in Sources */,
 				3500EC55203CC67A0083DCF6 /* TimelineTableViewController.swift in Sources */,
+				35D335B7204E11900056B6B0 /* FeedType20TableViewCell.swift in Sources */,
 				3500EC5D203D9DD60083DCF6 /* TriprAttachment.swift in Sources */,
+				35EDF213204F11F200A09347 /* tripTableViewCell.swift in Sources */,
 				3576E73D1FFB8176005A8BCB /* triprIOS.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
