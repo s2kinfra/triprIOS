@@ -14,5 +14,6 @@ struct TriprAttachment : Codable {
     var object : String
     var objectId : Int
     var timestamp : Double
+    var file : TriprFile
     
 }

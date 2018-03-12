@@ -18,6 +18,7 @@ struct TriprTrip : Codable {
     var following : [TriprUser]?
     var creator : TriprUser
     var id : Int
+    var tripImage: TriprFile?
     var timestamp : Double
     
 }

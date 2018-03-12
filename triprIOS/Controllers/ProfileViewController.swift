@@ -57,8 +57,19 @@ class ProfileViewController: UIViewController {
         self.fullname.text = "\(duser.firstname) \(duser.lastname)"
         self.username.text = duser.username
         self.userid.text = String(describing: duser.id)
-        self.follows.text = String(describing: duser.following?.count)
-        self.followers.text = String(describing: duser.followers?.count)
+        
+        if let followerCount = duser.followers?.count {
+            self.followers.text = String(followerCount)
+        }else {
+             self.followers.text = "0"
+        }
+        
+        if let followingCount = duser.following?.count {
+            self.follows.text = String(followingCount)
+        }else{
+            self.follows.text = "0"
+        }
+        
         do{
             if duser.profileImage.id != storedImage?.id {
                 try api.getImageDataFromAPI(url: (duser.profileImage.path), completionHandler: { (data) in

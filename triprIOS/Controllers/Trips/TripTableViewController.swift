@@ -10,6 +10,21 @@ import UIKit
 
 class TripTableViewController: UITableViewController {
     
+    @IBAction func refresh(_ sender: Any) {
+        do{
+            try api.getUsersTrips(user: (api.currentUser?.username)!, completionHandler: { (reponse, trips) in
+                self.trips.removeAll()
+                self.trips.append(contentsOf: trips)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    self.refreshControl?.endRefreshing()
+                }
+            })
+        }catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,18 +39,8 @@ class TripTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        do{
-            try api.getUsersTrips(user: (api.currentUser?.username)!, completionHandler: { (reponse, trips) in
-                self.trips.removeAll()
-                self.trips.append(contentsOf: trips)
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            })
-        }catch let error {
-            print(error.localizedDescription)
-        }
-        
+       
+        refresh(self)
         
     }
     override func didReceiveMemoryWarning() {
