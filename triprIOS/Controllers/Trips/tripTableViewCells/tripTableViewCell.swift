@@ -47,6 +47,7 @@ class tripTableViewCell: UITableViewCell {
         }else{
             self.tripImage.image = nil
         }
+        print(trip.destinations)
         if trip.followers != nil {
             self.numberOfTravellers.text = String(trip.followers!.count)
         }else {

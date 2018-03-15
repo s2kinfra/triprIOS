@@ -13,6 +13,7 @@
 		3500EC5B203D9D370083DCF6 /* TriprComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3500EC5A203D9D370083DCF6 /* TriprComment.swift */; };
 		3500EC5D203D9DD60083DCF6 /* TriprAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3500EC5C203D9DD60083DCF6 /* TriprAttachment.swift */; };
 		3518133D20002BF700F6F7CF /* TriprFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3518133C20002BF700F6F7CF /* TriprFeed.swift */; };
+		351A48552057D06B00DC6F44 /* TriprDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351A48542057D06B00DC6F44 /* TriprDestination.swift */; };
 		3547DADF202DFB1D006A8582 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3547DADE202DFB1D006A8582 /* ProfileViewController.swift */; };
 		355F3DD82007480A00D83351 /* TriprAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355F3DD72007480A00D83351 /* TriprAPIService.swift */; };
 		355F3DDA20074AE900D83351 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355F3DD920074AE900D83351 /* Reachability.swift */; };
@@ -45,6 +46,7 @@
 		3500EC5A203D9D370083DCF6 /* TriprComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprComment.swift; sourceTree = "<group>"; };
 		3500EC5C203D9DD60083DCF6 /* TriprAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprAttachment.swift; sourceTree = "<group>"; };
 		3518133C20002BF700F6F7CF /* TriprFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprFeed.swift; sourceTree = "<group>"; };
+		351A48542057D06B00DC6F44 /* TriprDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprDestination.swift; sourceTree = "<group>"; };
 		3547DADE202DFB1D006A8582 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		355F3DD72007480A00D83351 /* TriprAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprAPIService.swift; sourceTree = "<group>"; };
 		355F3DD920074AE900D83351 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				3500EC58203D9C0D0083DCF6 /* TriprTrip.swift */,
 				3500EC5A203D9D370083DCF6 /* TriprComment.swift */,
 				3500EC5C203D9DD60083DCF6 /* TriprAttachment.swift */,
+				351A48542057D06B00DC6F44 /* TriprDestination.swift */,
 			);
 			path = TriprModels;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				3576E7501FFBBD17005A8BCB /* TriprAPIMessages.swift in Sources */,
 				355F3DD82007480A00D83351 /* TriprAPIService.swift in Sources */,
 				3500EC57203CC99C0083DCF6 /* TriprTimeline.swift in Sources */,
+				351A48552057D06B00DC6F44 /* TriprDestination.swift in Sources */,
 				3594BB6D20096D91000CB300 /* TriprAPIPayloadMessages.swift in Sources */,
 				35D335BE204E8BE90056B6B0 /* FeedType10TableViewCell.swift in Sources */,
 				35775FDA202DAD79007494C1 /* String+JSONExtension.swift in Sources */,
