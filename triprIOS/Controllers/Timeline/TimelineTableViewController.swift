@@ -91,6 +91,12 @@ class TimelineTableViewController: UITableViewController {
         case .photoAdded :
             print("photoAdded")
             return UITableViewCell()
+        case .destinationCreated :
+            print("destinationCreated")
+            return UITableViewCell()
+        case .destinationUpdated:
+            print("destinationUpdated")
+            return UITableViewCell()
         case .unknown :
             print("unknown feed type")
             return UITableViewCell()

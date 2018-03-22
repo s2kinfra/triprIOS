@@ -12,8 +12,8 @@ import Foundation
 struct TriprDestination : Codable {
     
     var name : String
-    var startDate : Double
-    var endDate : Double
+    var arrivalDate : Double
+    var departureDate : Double
     var isPrivate : Int
     var creator : TriprUser
     var id : Int

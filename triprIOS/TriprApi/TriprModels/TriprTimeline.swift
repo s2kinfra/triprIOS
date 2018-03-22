@@ -18,6 +18,8 @@ enum FeedType : Int, Codable {
     tripUpdated = 12,
     commentAdded = 20,
     photoAdded = 30,
+    destinationCreated = 40,
+    destinationUpdated = 41,
     unknown = 9999
 }
 

@@ -254,10 +254,13 @@ final class TriprAPI {
                     let decoder = JSONDecoder.init()
                     let trips = try decoder.decode([TriprTrip].self, from: apiResponse.payload.data(using: .utf8)!)
                     completionHandler(apiResponse,trips )
-                }catch {
+                }catch let error {
                     do {
                         print(try apiResponse.payload.prettyPrintJSONString())
                         print("something fucked up")
+                        print(error.localizedDescription)
+                        let error2 : DecodingError = error as! DecodingError
+                        print(error2)
                     }catch {
                         print(apiResponse)
                     }
