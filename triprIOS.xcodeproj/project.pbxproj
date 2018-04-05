@@ -31,6 +31,7 @@
 		35775FD8202DA69B007494C1 /* TriprFollow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35775FD7202DA69B007494C1 /* TriprFollow.swift */; };
 		35775FDA202DAD79007494C1 /* String+JSONExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35775FD9202DAD79007494C1 /* String+JSONExtension.swift */; };
 		3594BB6D20096D91000CB300 /* TriprAPIPayloadMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3594BB6C20096D91000CB300 /* TriprAPIPayloadMessages.swift */; };
+		35A5E6942073B0EF0050784D /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A5E6932073B0EF0050784D /* LoginTextField.swift */; };
 		35D335B7204E11900056B6B0 /* FeedType20TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D335B6204E11900056B6B0 /* FeedType20TableViewCell.swift */; };
 		35D335BE204E8BE90056B6B0 /* FeedType10TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D335BD204E8BE90056B6B0 /* FeedType10TableViewCell.swift */; };
 		35D335C0204E8C150056B6B0 /* FeedTypeSuperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D335BF204E8C150056B6B0 /* FeedTypeSuperTableViewCell.swift */; };
@@ -66,6 +67,7 @@
 		35775FD7202DA69B007494C1 /* TriprFollow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprFollow.swift; sourceTree = "<group>"; };
 		35775FD9202DAD79007494C1 /* String+JSONExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+JSONExtension.swift"; sourceTree = "<group>"; };
 		3594BB6C20096D91000CB300 /* TriprAPIPayloadMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprAPIPayloadMessages.swift; sourceTree = "<group>"; };
+		35A5E6932073B0EF0050784D /* LoginTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
 		35D335B6204E11900056B6B0 /* FeedType20TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedType20TableViewCell.swift; sourceTree = "<group>"; };
 		35D335BD204E8BE90056B6B0 /* FeedType10TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedType10TableViewCell.swift; sourceTree = "<group>"; };
 		35D335BF204E8C150056B6B0 /* FeedTypeSuperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTypeSuperTableViewCell.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 		3576E7331FFB8176005A8BCB /* triprIOS */ = {
 			isa = PBXGroup;
 			children = (
+				35A5E6912073B0C40050784D /* Views */,
 				35775FD2202C783D007494C1 /* Controllers */,
 				3576E7491FFB8312005A8BCB /* TriprApi */,
 				3576E7341FFB8176005A8BCB /* AppDelegate.swift */,
@@ -157,6 +160,22 @@
 				3547DADE202DFB1D006A8582 /* ProfileViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		35A5E6912073B0C40050784D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				35A5E6922073B0D00050784D /* LoginScreen */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		35A5E6922073B0D00050784D /* LoginScreen */ = {
+			isa = PBXGroup;
+			children = (
+				35A5E6932073B0EF0050784D /* LoginTextField.swift */,
+			);
+			path = LoginScreen;
 			sourceTree = "<group>";
 		};
 		35D335B4204E114E0056B6B0 /* Timeline */ = {
@@ -288,6 +307,7 @@
 				3500EC57203CC99C0083DCF6 /* TriprTimeline.swift in Sources */,
 				351A48552057D06B00DC6F44 /* TriprDestination.swift in Sources */,
 				3594BB6D20096D91000CB300 /* TriprAPIPayloadMessages.swift in Sources */,
+				35A5E6942073B0EF0050784D /* LoginTextField.swift in Sources */,
 				35D335BE204E8BE90056B6B0 /* FeedType10TableViewCell.swift in Sources */,
 				35775FDA202DAD79007494C1 /* String+JSONExtension.swift in Sources */,
 				35D335C0204E8C150056B6B0 /* FeedTypeSuperTableViewCell.swift in Sources */,
