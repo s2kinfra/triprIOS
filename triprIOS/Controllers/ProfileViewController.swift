@@ -13,14 +13,17 @@ class ProfileViewController: UIViewController {
     typealias bufferedImage = (image: UIImage, id : Int)
     @IBOutlet weak var fullname: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
-    @IBOutlet weak var username: UILabel!
     @IBOutlet weak var userid: UILabel!
     @IBOutlet weak var follows: UILabel!
     @IBOutlet weak var followers: UILabel!
     
     var displayedUser : TriprUser?
     var storedImage : bufferedImage?
+    let defaults = UserDefaults.standard
     
+    @IBAction func changeProfilePicture(_ sender: Any) {
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -31,9 +34,7 @@ class ProfileViewController: UIViewController {
             try api.logoutUset(completionHandler: { apiresponse in
                 if apiresponse.status.code == .ok {
                     DispatchQueue.main.async {
-                        let defaults = UserDefaults.standard
-                        defaults.set("", forKey: "username")
-                        defaults.set("", forKey: "password")
+                        self.defaults.set("", forKey: "password")
                         //Remove user credentials
                         let rootController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "LoginViewController")
                         self.present(rootController, animated: true, completion: nil)
@@ -55,7 +56,10 @@ class ProfileViewController: UIViewController {
         }
         
         self.fullname.text = "\(duser.firstname) \(duser.lastname)"
-        self.username.text = duser.username
+        if self.fullname.text == "" {
+            self.fullname.text = "@\(duser.username)"
+        }
+        self.title = duser.username
         self.userid.text = String(describing: duser.id)
         
         if let followerCount = duser.followers?.count {
@@ -75,6 +79,8 @@ class ProfileViewController: UIViewController {
                 try api.getImageDataFromAPI(url: (duser.profileImage.path), completionHandler: { (data) in
                     DispatchQueue.main.async() {
                         self.profileImage.image = UIImage(data: data)
+                        _ = self.profileImage.image?.saveImage(filename: duser.username)
+                        self.defaults.set(duser.username, forKey: "profilePicture")
                         let buffer = bufferedImage(image: UIImage(data: data)!, id:duser.profileImage.id )
                         self.storedImage = buffer
                     }

@@ -15,6 +15,7 @@
 		3518133D20002BF700F6F7CF /* TriprFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3518133C20002BF700F6F7CF /* TriprFeed.swift */; };
 		351A48552057D06B00DC6F44 /* TriprDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351A48542057D06B00DC6F44 /* TriprDestination.swift */; };
 		3547DADF202DFB1D006A8582 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3547DADE202DFB1D006A8582 /* ProfileViewController.swift */; };
+		35482187207A19D4000B5C22 /* RoundedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35482186207A19D4000B5C22 /* RoundedImage.swift */; };
 		355F3DD82007480A00D83351 /* TriprAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355F3DD72007480A00D83351 /* TriprAPIService.swift */; };
 		355F3DDA20074AE900D83351 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355F3DD920074AE900D83351 /* Reachability.swift */; };
 		3576E7351FFB8176005A8BCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3576E7341FFB8176005A8BCB /* AppDelegate.swift */; };
@@ -32,6 +33,7 @@
 		35775FDA202DAD79007494C1 /* String+JSONExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35775FD9202DAD79007494C1 /* String+JSONExtension.swift */; };
 		3594BB6D20096D91000CB300 /* TriprAPIPayloadMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3594BB6C20096D91000CB300 /* TriprAPIPayloadMessages.swift */; };
 		35A5E6942073B0EF0050784D /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A5E6932073B0EF0050784D /* LoginTextField.swift */; };
+		35CF25402077A31D004504B4 /* UIImage+save_load.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CF253F2077A31D004504B4 /* UIImage+save_load.swift */; };
 		35D335B7204E11900056B6B0 /* FeedType20TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D335B6204E11900056B6B0 /* FeedType20TableViewCell.swift */; };
 		35D335BE204E8BE90056B6B0 /* FeedType10TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D335BD204E8BE90056B6B0 /* FeedType10TableViewCell.swift */; };
 		35D335C0204E8C150056B6B0 /* FeedTypeSuperTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D335BF204E8C150056B6B0 /* FeedTypeSuperTableViewCell.swift */; };
@@ -49,6 +51,7 @@
 		3518133C20002BF700F6F7CF /* TriprFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprFeed.swift; sourceTree = "<group>"; };
 		351A48542057D06B00DC6F44 /* TriprDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprDestination.swift; sourceTree = "<group>"; };
 		3547DADE202DFB1D006A8582 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		35482186207A19D4000B5C22 /* RoundedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImage.swift; sourceTree = "<group>"; };
 		355F3DD72007480A00D83351 /* TriprAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprAPIService.swift; sourceTree = "<group>"; };
 		355F3DD920074AE900D83351 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		3576E7311FFB8176005A8BCB /* triprIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = triprIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +71,7 @@
 		35775FD9202DAD79007494C1 /* String+JSONExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+JSONExtension.swift"; sourceTree = "<group>"; };
 		3594BB6C20096D91000CB300 /* TriprAPIPayloadMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprAPIPayloadMessages.swift; sourceTree = "<group>"; };
 		35A5E6932073B0EF0050784D /* LoginTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
+		35CF253F2077A31D004504B4 /* UIImage+save_load.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+save_load.swift"; sourceTree = "<group>"; };
 		35D335B6204E11900056B6B0 /* FeedType20TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedType20TableViewCell.swift; sourceTree = "<group>"; };
 		35D335BD204E8BE90056B6B0 /* FeedType10TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedType10TableViewCell.swift; sourceTree = "<group>"; };
 		35D335BF204E8C150056B6B0 /* FeedTypeSuperTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTypeSuperTableViewCell.swift; sourceTree = "<group>"; };
@@ -106,6 +110,7 @@
 		3576E7331FFB8176005A8BCB /* triprIOS */ = {
 			isa = PBXGroup;
 			children = (
+				35CF253E2077A307004504B4 /* extensions */,
 				35A5E6912073B0C40050784D /* Views */,
 				35775FD2202C783D007494C1 /* Controllers */,
 				3576E7491FFB8312005A8BCB /* TriprApi */,
@@ -166,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				35A5E6922073B0D00050784D /* LoginScreen */,
+				35482186207A19D4000B5C22 /* RoundedImage.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -176,6 +182,14 @@
 				35A5E6932073B0EF0050784D /* LoginTextField.swift */,
 			);
 			path = LoginScreen;
+			sourceTree = "<group>";
+		};
+		35CF253E2077A307004504B4 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				35CF253F2077A31D004504B4 /* UIImage+save_load.swift */,
+			);
+			path = extensions;
 			sourceTree = "<group>";
 		};
 		35D335B4204E114E0056B6B0 /* Timeline */ = {
@@ -320,6 +334,8 @@
 				3500EC55203CC67A0083DCF6 /* TimelineTableViewController.swift in Sources */,
 				35D335B7204E11900056B6B0 /* FeedType20TableViewCell.swift in Sources */,
 				3500EC5D203D9DD60083DCF6 /* TriprAttachment.swift in Sources */,
+				35CF25402077A31D004504B4 /* UIImage+save_load.swift in Sources */,
+				35482187207A19D4000B5C22 /* RoundedImage.swift in Sources */,
 				35EDF213204F11F200A09347 /* tripTableViewCell.swift in Sources */,
 				3576E73D1FFB8176005A8BCB /* triprIOS.xcdatamodeld in Sources */,
 			);

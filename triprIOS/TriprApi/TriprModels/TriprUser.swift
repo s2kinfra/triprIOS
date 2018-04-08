@@ -30,7 +30,6 @@ struct TriprUser : Codable{
         self.id = _id
         
     }
-    
    
 }
 
