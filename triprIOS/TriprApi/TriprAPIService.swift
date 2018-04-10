@@ -81,6 +81,17 @@ class TriprAPIService {
         
         reachability.whenReachable = { reachability in
             self.isInternetAvailable = true
+            if self.messageQueue.count > 0 {
+                for message in self.messageQueue {
+                    do {
+                    try message.sendMessage(response: { (response) in
+                        
+                    })
+                    }catch{
+                        print("message in queue failed")
+                    }
+                }
+            }
         }
         reachability.whenUnreachable = { _ in
            self.isInternetAvailable = false

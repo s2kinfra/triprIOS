@@ -8,8 +8,9 @@
 
 import UIKit
 import CoreData
-
-  let api = TriprAPI.sharedInstance
+import Photos
+let api = TriprAPI.sharedInstance
+var photoAuth : Bool = false
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         api.setEnviroment(.DEV)
+        let photos = PHPhotoLibrary.authorizationStatus()
+        if photos == .notDetermined {
+            PHPhotoLibrary.requestAuthorization({status in
+                if status == .authorized{
+                    photoAuth = true
+                } else {
+                    photoAuth = false
+                    let alert = UIAlertController(title: "Photos Access Denied", message: "App needs access to photos library.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+                }
+            })
+        } else if photos == .authorized {
+            photoAuth = true
+        }
         return true
     }
 

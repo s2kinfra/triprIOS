@@ -181,4 +181,76 @@ class triprMessageUserLogin: triprAPIRequestMessage {
     }
 }
 
+///MARK : User set profile image
+class triprMessageUserProfileImage: triprAPIRequestMessage {
+    
+    struct triprMessageUserSetProfileImagePayload: Codable {
+        var profileImage : TriprFileData
+        
+        init(profileImage _image : TriprFileData) {
+            self.profileImage = _image
+        }
+    }
+    
+    var payload : triprMessageUserSetProfileImagePayload
+    
+    private enum CodingKeys : String, CodingKey {
+        case payload
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(payload, forKey: .payload)
+    }
+    
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.payload = try container.decode(triprMessageUserSetProfileImagePayload.self, forKey: .payload)
+        try super.init(from: decoder)
+        
+    }
+    
+    init(base64 _base64 : String, filename _filename : String) {
+        self.payload = triprMessageUserSetProfileImagePayload.init(profileImage: TriprFileData.init(base64: _base64, filename: _filename))
+        super.init()
+    }
+}
+
+///MARK : Search
+class triprMessageSearchRequest: triprAPIRequestMessage {
+    struct triprMessageSearchRequestPayload: Codable {
+        var searchTerm : String
+        
+        init(searchTerm _term : String) {
+            self.searchTerm = _term
+        }
+    }
+    
+    var payload : triprMessageSearchRequestPayload
+    
+    private enum CodingKeys : String, CodingKey {
+        case payload
+    }
+    
+    override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(payload, forKey: .payload)
+    }
+    
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.payload = try container.decode(triprMessageSearchRequestPayload.self, forKey: .payload)
+        try super.init(from: decoder)
+        
+    }
+    
+    init(searchTerm _term : String) {
+        self.payload = triprMessageSearchRequestPayload.init(searchTerm: _term)
+        super.init()
+    }
+}
 

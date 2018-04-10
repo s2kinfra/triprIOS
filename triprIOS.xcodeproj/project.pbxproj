@@ -14,6 +14,13 @@
 		3500EC5D203D9DD60083DCF6 /* TriprAttachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3500EC5C203D9DD60083DCF6 /* TriprAttachment.swift */; };
 		3518133D20002BF700F6F7CF /* TriprFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3518133C20002BF700F6F7CF /* TriprFeed.swift */; };
 		351A48552057D06B00DC6F44 /* TriprDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351A48542057D06B00DC6F44 /* TriprDestination.swift */; };
+		353FE07A207AB02100F3C67B /* TriprFileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353FE079207AB02100F3C67B /* TriprFileData.swift */; };
+		353FE07D207ABAF100F3C67B /* FollowTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353FE07C207ABAF100F3C67B /* FollowTableViewController.swift */; };
+		353FE07F207AC07D00F3C67B /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353FE07E207AC07D00F3C67B /* FollowTableViewCell.swift */; };
+		353FE083207B42A900F3C67B /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353FE082207B42A900F3C67B /* SearchTableViewController.swift */; };
+		353FE08D207BB29E00F3C67B /* TriprSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353FE08C207BB29E00F3C67B /* TriprSearchResult.swift */; };
+		353FE090207BBFB300F3C67B /* SearchResultUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353FE08F207BBFB300F3C67B /* SearchResultUserTableViewCell.swift */; };
+		353FE092207BBFC400F3C67B /* SearchResultTripTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353FE091207BBFC400F3C67B /* SearchResultTripTableViewCell.swift */; };
 		3547DADF202DFB1D006A8582 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3547DADE202DFB1D006A8582 /* ProfileViewController.swift */; };
 		35482187207A19D4000B5C22 /* RoundedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35482186207A19D4000B5C22 /* RoundedImage.swift */; };
 		355F3DD82007480A00D83351 /* TriprAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355F3DD72007480A00D83351 /* TriprAPIService.swift */; };
@@ -50,6 +57,13 @@
 		3500EC5C203D9DD60083DCF6 /* TriprAttachment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprAttachment.swift; sourceTree = "<group>"; };
 		3518133C20002BF700F6F7CF /* TriprFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprFeed.swift; sourceTree = "<group>"; };
 		351A48542057D06B00DC6F44 /* TriprDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprDestination.swift; sourceTree = "<group>"; };
+		353FE079207AB02100F3C67B /* TriprFileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprFileData.swift; sourceTree = "<group>"; };
+		353FE07C207ABAF100F3C67B /* FollowTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowTableViewController.swift; sourceTree = "<group>"; };
+		353FE07E207AC07D00F3C67B /* FollowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowTableViewCell.swift; sourceTree = "<group>"; };
+		353FE082207B42A900F3C67B /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
+		353FE08C207BB29E00F3C67B /* TriprSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprSearchResult.swift; sourceTree = "<group>"; };
+		353FE08F207BBFB300F3C67B /* SearchResultUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultUserTableViewCell.swift; sourceTree = "<group>"; };
+		353FE091207BBFC400F3C67B /* SearchResultTripTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTripTableViewCell.swift; sourceTree = "<group>"; };
 		3547DADE202DFB1D006A8582 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		35482186207A19D4000B5C22 /* RoundedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedImage.swift; sourceTree = "<group>"; };
 		355F3DD72007480A00D83351 /* TriprAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriprAPIService.swift; sourceTree = "<group>"; };
@@ -91,6 +105,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		353FE07B207ABAD300F3C67B /* Follow */ = {
+			isa = PBXGroup;
+			children = (
+				353FE080207AC9BA00F3C67B /* follow TableViewCells */,
+				353FE07C207ABAF100F3C67B /* FollowTableViewController.swift */,
+			);
+			path = Follow;
+			sourceTree = "<group>";
+		};
+		353FE080207AC9BA00F3C67B /* follow TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				353FE07E207AC07D00F3C67B /* FollowTableViewCell.swift */,
+			);
+			path = "follow TableViewCells";
+			sourceTree = "<group>";
+		};
+		353FE081207B429300F3C67B /* SearchController */ = {
+			isa = PBXGroup;
+			children = (
+				353FE08E207BBF9400F3C67B /* SearchResultTableViewCell */,
+				353FE082207B42A900F3C67B /* SearchTableViewController.swift */,
+			);
+			path = SearchController;
+			sourceTree = "<group>";
+		};
+		353FE08E207BBF9400F3C67B /* SearchResultTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				353FE08F207BBFB300F3C67B /* SearchResultUserTableViewCell.swift */,
+				353FE091207BBFC400F3C67B /* SearchResultTripTableViewCell.swift */,
+			);
+			path = SearchResultTableViewCell;
+			sourceTree = "<group>";
+		};
 		3576E7281FFB8176005A8BCB = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +200,8 @@
 				3500EC5A203D9D370083DCF6 /* TriprComment.swift */,
 				3500EC5C203D9DD60083DCF6 /* TriprAttachment.swift */,
 				351A48542057D06B00DC6F44 /* TriprDestination.swift */,
+				353FE079207AB02100F3C67B /* TriprFileData.swift */,
+				353FE08C207BB29E00F3C67B /* TriprSearchResult.swift */,
 			);
 			path = TriprModels;
 			sourceTree = "<group>";
@@ -158,6 +209,8 @@
 		35775FD2202C783D007494C1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				353FE081207B429300F3C67B /* SearchController */,
+				353FE07B207ABAD300F3C67B /* Follow */,
 				35EDF210204F11D300A09347 /* Trips */,
 				35D335B4204E114E0056B6B0 /* Timeline */,
 				3576E7361FFB8176005A8BCB /* LoginViewController.swift */,
@@ -311,6 +364,7 @@
 				3576E74B1FFB8326005A8BCB /* TriprAPI.swift in Sources */,
 				35775FD4202C7867007494C1 /* RegisterUserViewController.swift in Sources */,
 				3576E7371FFB8176005A8BCB /* LoginViewController.swift in Sources */,
+				353FE08D207BB29E00F3C67B /* TriprSearchResult.swift in Sources */,
 				3518133D20002BF700F6F7CF /* TriprFeed.swift in Sources */,
 				35D335C3204E8E160056B6B0 /* Date+TimeAgo.swift in Sources */,
 				35EDF20F204F0B5E00A09347 /* TripTableViewController.swift in Sources */,
@@ -321,12 +375,15 @@
 				3500EC57203CC99C0083DCF6 /* TriprTimeline.swift in Sources */,
 				351A48552057D06B00DC6F44 /* TriprDestination.swift in Sources */,
 				3594BB6D20096D91000CB300 /* TriprAPIPayloadMessages.swift in Sources */,
+				353FE07A207AB02100F3C67B /* TriprFileData.swift in Sources */,
 				35A5E6942073B0EF0050784D /* LoginTextField.swift in Sources */,
 				35D335BE204E8BE90056B6B0 /* FeedType10TableViewCell.swift in Sources */,
 				35775FDA202DAD79007494C1 /* String+JSONExtension.swift in Sources */,
 				35D335C0204E8C150056B6B0 /* FeedTypeSuperTableViewCell.swift in Sources */,
+				353FE092207BBFC400F3C67B /* SearchResultTripTableViewCell.swift in Sources */,
 				35775FD6202DA663007494C1 /* TriprFile.swift in Sources */,
 				355F3DDA20074AE900D83351 /* Reachability.swift in Sources */,
+				353FE07D207ABAF100F3C67B /* FollowTableViewController.swift in Sources */,
 				3500EC59203D9C0D0083DCF6 /* TriprTrip.swift in Sources */,
 				3576E74E1FFB8874005A8BCB /* TriprUser.swift in Sources */,
 				3547DADF202DFB1D006A8582 /* ProfileViewController.swift in Sources */,
@@ -334,9 +391,12 @@
 				3500EC55203CC67A0083DCF6 /* TimelineTableViewController.swift in Sources */,
 				35D335B7204E11900056B6B0 /* FeedType20TableViewCell.swift in Sources */,
 				3500EC5D203D9DD60083DCF6 /* TriprAttachment.swift in Sources */,
+				353FE090207BBFB300F3C67B /* SearchResultUserTableViewCell.swift in Sources */,
 				35CF25402077A31D004504B4 /* UIImage+save_load.swift in Sources */,
 				35482187207A19D4000B5C22 /* RoundedImage.swift in Sources */,
 				35EDF213204F11F200A09347 /* tripTableViewCell.swift in Sources */,
+				353FE083207B42A900F3C67B /* SearchTableViewController.swift in Sources */,
+				353FE07F207AC07D00F3C67B /* FollowTableViewCell.swift in Sources */,
 				3576E73D1FFB8176005A8BCB /* triprIOS.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

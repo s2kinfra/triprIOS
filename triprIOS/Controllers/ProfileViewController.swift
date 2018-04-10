@@ -8,24 +8,96 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     typealias bufferedImage = (image: UIImage, id : Int)
     @IBOutlet weak var fullname: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var userid: UILabel!
-    @IBOutlet weak var follows: UILabel!
-    @IBOutlet weak var followers: UILabel!
+//    @IBOutlet weak var follows: UILabel!
+//    @IBOutlet weak var followers: UILabel!
+    
+    @IBOutlet weak var follows: UIButton!
+    @IBOutlet weak var followers: UIButton!
     
     var displayedUser : TriprUser?
     var storedImage : bufferedImage?
     let defaults = UserDefaults.standard
+    var imagePicker = UIImagePickerController()
     
-    @IBAction func changeProfilePicture(_ sender: Any) {
+    
+    static func displayUser(user _user : TriprUser) -> UINavigationController {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+//        let nc : UINavigationController = mainStoryboard.instantiateViewController(withIdentifier: "ProfileViewNavigationController") as! UINavigationController
+        
+        let vc : ProfileViewController = mainStoryboard.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        vc.displayedUser = _user
+        let nc = UINavigationController(rootViewController: vc)
+        return nc
         
     }
+    
+    @IBAction func changeProfilePicture(_ sender: Any) {
+       
+         let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+        
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+            alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+                self.openCamera()
+            }))
+        }
+        
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.photoLibrary){
+            alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: { _ in
+                self.openGallary()
+            }))
+        }
+        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self.storedImage?.image = pickedImage
+            do {
+                try api.setUserProfileImage(imageData: UIImagePNGRepresentation(pickedImage)!, filename: "profilePicture.png") { response in
+                    if response.status.code == .error {
+                        DispatchQueue.main.async {
+                            self.storedImage?.id = -1
+                            let alert = UIAlertController(title: "Failed to upload profile picture", message: response.status.text, preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default))
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                }
+            }catch {
+                self.storedImage?.id = -1
+                let alert = UIAlertController(title: "Failed to upload profile picture", message: "Couldn´t upload profile picture", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func openCamera()
+    {
+            imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+            imagePicker.allowsEditing = true
+            self.present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func openGallary()
+    {
+        imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        imagePicker.allowsEditing = true
+        self.present(imagePicker, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        imagePicker.delegate = self
         // Do any additional setup after loading the view.
     }
     
@@ -49,7 +121,14 @@ class ProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         if displayedUser == nil {
             displayedUser = api.currentUser!
+        }else{
+//            we are comming from some other way
+            
+            let backButton2 = UIBarButtonItem()
+            backButton2.title = "Back"
+            self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton2
         }
+        
         
         guard let duser = displayedUser else {
             return
@@ -63,15 +142,42 @@ class ProfileViewController: UIViewController {
         self.userid.text = String(describing: duser.id)
         
         if let followerCount = duser.followers?.count {
-            self.followers.text = String(followerCount)
+            self.followers.setTitle(String(followerCount), for: .normal)
         }else {
-             self.followers.text = "0"
+            self.followers.setTitle("0", for: .normal)
         }
         
         if let followingCount = duser.following?.count {
-            self.follows.text = String(followingCount)
+            self.follows.setTitle(String(followingCount), for: .normal)
         }else{
-            self.follows.text = "0"
+            self.follows.setTitle("0", for: .normal)
+        }
+        
+        updateProfilePicture()
+    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "followers" {
+            if let destinationVC = segue.destination as? FollowTableViewController {
+                destinationVC.follow = (displayedUser?.followers)!
+                destinationVC.title = "Followers"
+            }
+        }
+        
+        if segue.identifier == "follows" {
+            if let destinationVC = segue.destination as? FollowTableViewController {
+                destinationVC.follow = (displayedUser?.following)!
+                destinationVC.title = "Follows"
+            }
+        }
+    }
+    func updateProfilePicture() {
+        guard let duser = displayedUser else {
+            return
         }
         
         do{
@@ -92,11 +198,6 @@ class ProfileViewController: UIViewController {
             
         }
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     /*
      // MARK: - Navigation

@@ -22,6 +22,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.username.text = defaults.string(forKey: "username")
         if self.username.text != "" && self.username.text != nil && defaults.string(forKey: "profilePicture") != nil && defaults.string(forKey: "profilePicture") != "" {
             self.profilePicture.image = UIImage.getSavedImage(named: self.username.text!)
@@ -39,12 +40,9 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    @IBAction func login(_ sender: Any) {
-        loginButton.isEnabled = false
+    func doRealLoggin() {
         do {
-            self.activityIndicator.startAnimating()
-            try api.loginUser(username: username.text!, password: password.text!, completionHandler: { (response, user) in
+            try api.loginUser(username: self.username.text!, password: self.password.text!, completionHandler: { (response, user) in
                 if response.status.code == .error {
                     DispatchQueue.main.async {
                         self.activityIndicator.stopAnimating()
@@ -69,17 +67,39 @@ class LoginViewController: UIViewController {
                         let defaults = UserDefaults.standard
                         defaults.set(self.username.text!, forKey : "username")
                         defaults.set(self.password.text!, forKey : "password")
+                        defaults.set(api.currentUser!, forKey : "currentUser")
+                        
                         //                        let alert = UIAlertController(title: "User logged in", message: "Welcome back \(api.currentUser!.firstname) \(api.currentUser!.lastname)", preferredStyle: UIAlertControllerStyle.alert)
                         //                        alert.addAction(UIAlertAction(title: "Ok", style: .default))
                         self.performSegue(withIdentifier: "loggedIn", sender: self)
                         self.loginButton.isEnabled = true
                     }
                 }
-                
             })
         }catch{
             loginButton.isEnabled = true
         }
+    }
+    @IBAction func login(_ sender: Any) {
+        loginButton.isEnabled = false
+        do {
+            self.activityIndicator.startAnimating()
+            try api.isLoggedIn(completionHandler: { (response, user) in
+                if let loggedinuser = user {
+                    api.currentUser = loggedinuser
+                    DispatchQueue.main.async {
+                        self.activityIndicator.stopAnimating()
+                        self.performSegue(withIdentifier: "loggedIn", sender: self)
+                        self.loginButton.isEnabled = true
+                    }
+                }else{
+                    self.doRealLoggin()
+                }
+            })
+        }catch{
+            loginButton.isEnabled = true
+        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
