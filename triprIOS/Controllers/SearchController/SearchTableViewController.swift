@@ -110,6 +110,16 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -171,8 +181,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             //            let user = users[(indexPath?.row)!]
             //            vc.displayedUser = user
             //            self.present(vc, animated: true, completion: nil)
-            let user = users[(indexPath?.row)!]
-            self.tabBarController!.present(ProfileViewController.displayUser(user: user), animated: true, completion: nil) 
+//            let user = users[(indexPath?.row)!]
+            self.performSegue(withIdentifier: "profile", sender: self)
         case 1:
             break
         default:
@@ -196,6 +206,17 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             }
         default:
             return "Unknown"
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "profile" {
+            if let destinationVC = segue.destination as? ProfileViewController {
+                let indexPath = tableView.indexPathForSelectedRow
+                let user = self.users[(indexPath?.row)!]
+                destinationVC.displayedUser = user
+                
+            }
         }
     }
     

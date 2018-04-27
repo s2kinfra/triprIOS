@@ -67,10 +67,6 @@ class LoginViewController: UIViewController {
                         let defaults = UserDefaults.standard
                         defaults.set(self.username.text!, forKey : "username")
                         defaults.set(self.password.text!, forKey : "password")
-                        defaults.set(api.currentUser!, forKey : "currentUser")
-                        
-                        //                        let alert = UIAlertController(title: "User logged in", message: "Welcome back \(api.currentUser!.firstname) \(api.currentUser!.lastname)", preferredStyle: UIAlertControllerStyle.alert)
-                        //                        alert.addAction(UIAlertAction(title: "Ok", style: .default))
                         self.performSegue(withIdentifier: "loggedIn", sender: self)
                         self.loginButton.isEnabled = true
                     }
@@ -93,7 +89,9 @@ class LoginViewController: UIViewController {
                         self.loginButton.isEnabled = true
                     }
                 }else{
-                    self.doRealLoggin()
+                    DispatchQueue.main.async {
+                        self.doRealLoggin()
+                    }
                 }
             })
         }catch{

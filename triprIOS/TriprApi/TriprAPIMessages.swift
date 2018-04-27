@@ -21,6 +21,7 @@ struct triprAPIMessage {
     let apiService = TriprAPIService.sharedInstance
     var httpMethod : httpMethod
     var attachment : Data?
+    let api = TriprAPI.sharedInstance
     
     init?(payload : triprAPIRequestMessage?, httpMethod : httpMethod, contentType: httpContentTypes, URL : String, quable : Bool, priority : TriprAPIMessagePriority) {
         do {
@@ -43,8 +44,33 @@ struct triprAPIMessage {
     }
     
     func sendMessage(response : @escaping (TriprAPIResponseMessage)->Void) throws {
+        if api.logging {
+            print("------------------------------------------")
+            print("Sending message to URL : \(self.URL)")
+            print("timestamp: \(self.timestamp)")
+            print("Payload:")
+            if payload.count > 3000 {
+                print("Large payload , above 3000 char so not displayed")
+            }else{
+                print("\(self.payload)")
+            }
+            print("------------------------------------------")
+        }
         try apiService.sendMessage(message: self, APIresponse: { (dataResponse) in
-            
+            if self.api.logging {
+                print("------------------------------------------")
+                print("Response received")
+                print("timestamp: \(dataResponse.timestamp)")
+                print("status code: \(dataResponse.status.code)")
+                print("status text: \(dataResponse.status.text)")
+                print("Payload:")
+                if dataResponse.payload.count > 3000 {
+                    print("Large payload , above 3000 char so not displayed")
+                }else{
+                    print("\(dataResponse.payload)")
+                }
+                print("------------------------------------------")
+            }
             response(dataResponse)
         })
     }

@@ -35,3 +35,71 @@ extension UIImage {
     }
     
 }
+
+extension UIImage {
+    
+    func scaleImage(toSize newSize: CGSize) -> UIImage? {
+        let newRect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height).integral
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
+        if let context = UIGraphicsGetCurrentContext() {
+            context.interpolationQuality = .high
+            let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: newSize.height)
+            context.concatenate(flipVertical)
+            context.draw(self.cgImage!, in: newRect)
+            //            let newImage = UIImage(cgImage: context.makeImage()!)
+            let newImage = UIImage(cgImage: context.makeImage()!, scale: scale, orientation: .up)
+            UIGraphicsEndImageContext()
+            return newImage
+        }
+        return nil
+    }
+    
+    func scaleImage(newWidth: Int) -> UIImage? {
+        
+        let scale = CGFloat(newWidth) / self.size.width
+        let newHeight = self.size.height * scale
+        
+        let newSize = CGSize.init(width: CGFloat(newWidth), height: newHeight)
+        
+        let newRect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height).integral
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
+        if let context = UIGraphicsGetCurrentContext() {
+            context.interpolationQuality = .high
+            let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: newSize.height)
+            context.concatenate(flipVertical)
+            context.draw(self.cgImage!, in: newRect)
+            //            let newImage = UIImage(cgImage: context.makeImage()!)
+            let newImage = UIImage(cgImage: context.makeImage()!, scale: scale, orientation: .up)
+            UIGraphicsEndImageContext()
+            return newImage
+        }
+        return nil
+    }
+    
+    func scaleImage(byPercent: Int) -> UIImage? {
+        let percent : CGFloat = CGFloat(( byPercent / 100 ))
+        if percent == 0 {
+            return nil
+        }
+        
+        let newHeight = self.size.height * percent
+        let newWidth = self.size.width * percent
+        
+        let newRect = CGRect(x: 0, y: 0, width: newWidth, height: newHeight).integral
+        UIGraphicsBeginImageContextWithOptions(CGSize.init(width: newWidth, height: newHeight), false, 0)
+        if let context = UIGraphicsGetCurrentContext() {
+            context.interpolationQuality = .high
+            let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: newHeight)
+            context.concatenate(flipVertical)
+            context.draw(self.cgImage!, in: newRect)
+            //            let newImage = UIImage(cgImage: context.makeImage()!)
+            let newImage = UIImage(cgImage: context.makeImage()!, scale: scale, orientation: .up)
+            UIGraphicsEndImageContext()
+            return newImage
+        }
+        return nil
+    }
+    
+}
+

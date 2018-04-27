@@ -19,7 +19,9 @@ class ProfileViewController: UIViewController,UIImagePickerControllerDelegate, U
     
     @IBOutlet weak var follows: UIButton!
     @IBOutlet weak var followers: UIButton!
+    @IBOutlet weak var choosePicture: UIButton!
     
+    @IBOutlet weak var logoutButton: UIButton!
     var displayedUser : TriprUser?
     var storedImage : bufferedImage?
     let defaults = UserDefaults.standard
@@ -59,9 +61,17 @@ class ProfileViewController: UIViewController,UIImagePickerControllerDelegate, U
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.storedImage?.image = pickedImage
+            guard let resizedImage = pickedImage.scaleImage(newWidth: 200) else {
+                self.storedImage?.id = -1
+                let alert = UIAlertController(title: "Failed to resize profile picture", message: "Couldn´t resize profile picture", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+            
+            self.storedImage?.image = resizedImage
             do {
-                try api.setUserProfileImage(imageData: UIImagePNGRepresentation(pickedImage)!, filename: "profilePicture.png") { response in
+                try api.setUserProfileImage(imageData: UIImagePNGRepresentation(resizedImage)!, filename: "profilePicture.png") { response in
                     if response.status.code == .error {
                         DispatchQueue.main.async {
                             self.storedImage?.id = -1
@@ -117,13 +127,22 @@ class ProfileViewController: UIViewController,UIImagePickerControllerDelegate, U
             print(error.localizedDescription)
         }
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.displayedUser = nil
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if displayedUser == nil {
             displayedUser = api.currentUser!
+            choosePicture.isEnabled = true
+            logoutButton.isEnabled = true
         }else{
 //            we are comming from some other way
-            
+            self.choosePicture.isEnabled = false
+            logoutButton.isEnabled = false
             let backButton2 = UIBarButtonItem()
             backButton2.title = "Back"
             self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton2
@@ -195,7 +214,10 @@ class ProfileViewController: UIViewController,UIImagePickerControllerDelegate, U
                 self.profileImage.image = self.storedImage?.image
             }
         }catch{
-            
+            self.storedImage?.id = -1
+            let alert = UIAlertController(title: "Failed to upload profile picture", message: "Couldn´t upload profile picture", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     

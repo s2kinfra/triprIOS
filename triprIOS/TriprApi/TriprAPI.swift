@@ -119,31 +119,45 @@ enum triprAPIEndpointURLs {
 
 final class TriprAPI {
     
+    
+    let reachability = Reachability()!
     static let sharedInstance = TriprAPI.init(apikey: "ios")
     
-    var publicFolder : String
-    var baseURL : String
+    var publicFolder : String = ""
+    var baseURL : String = ""
     // Initialization
-    private init(apikey: String, enviroment: APIEnviroment = .DEV) {
-        switch enviroment {
-        case .PROD:
-            baseURL = "http://fabularis.dk:8081/api/v1"
-            publicFolder = "http://fabularis.dk:8081"
-        default:
-            baseURL = "http://localhost:8080/api/v1"
-            publicFolder = "http://localhost:8080"
-        }
+    private init(apikey: String) {
+        
         self.apiKey = apikey
+        reachability.whenReachable = { reachability in
+            
+        }
+        reachability.whenUnreachable = { _ in
+            
+        }
+        
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+        setEnviroment(.DEV)
     }
     
     private var enviroment : APIEnviroment {
         get {
             return self.enviroment
-        }set {
+        }set(newValue) {
             switch newValue {
             case .PROD:
                 baseURL = "http://fabularis.dk:8081/api/v1"
                 publicFolder = "http://fabularis.dk:8081"
+            case .TEST:
+                baseURL = "http://172.16.0.4:8080/api/v1"
+                publicFolder = "http://172.16.0.4:8080"
+            case .DEV:
+                baseURL = "http://localhost:8080/api/v1"
+                publicFolder = "http://localhost:8080"
             default:
                 baseURL = "http://localhost:8080/api/v1"
                 publicFolder = "http://localhost:8080"
@@ -153,11 +167,22 @@ final class TriprAPI {
     var apiKey : String
     var currentUser : TriprUser?
     var logging : Bool = false
+    
     func setEnviroment(_ env: APIEnviroment) {
         self.enviroment = env
     }
     func getEnviroment() -> APIEnviroment {
         return self.enviroment
+    }
+    
+    func isInternetAvailable()->Bool {
+        var isAvailable : Bool
+        if reachability.connection == .none {
+            isAvailable = false
+        }else {
+            isAvailable = true
+        }
+        return isAvailable
     }
     
     func logoutUset( completionHandler: @escaping (TriprAPIResponseMessage)->Void) throws {

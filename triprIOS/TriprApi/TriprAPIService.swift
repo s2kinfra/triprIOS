@@ -73,41 +73,30 @@ enum httpResponseStatusCode : Int, Codable {
 class TriprAPIService {
     
     static let sharedInstance = TriprAPIService.init()
-    let reachability = Reachability()!
-    var isInternetAvailable : Bool = false
-    var messageQueue = [triprAPIMessage]()
+     var messageQueue = [triprAPIMessage]()
+    let api = TriprAPI.sharedInstance
     
     private init() {
         
-        reachability.whenReachable = { reachability in
-            self.isInternetAvailable = true
+        api.reachability.whenReachable = { reachability in
             if self.messageQueue.count > 0 {
                 for message in self.messageQueue {
                     do {
-                    try message.sendMessage(response: { (response) in
-                        
-                    })
+                        try message.sendMessage(response: { (response) in
+                            
+                        })
                     }catch{
                         print("message in queue failed")
                     }
                 }
             }
         }
-        reachability.whenUnreachable = { _ in
-           self.isInternetAvailable = false
-        }
-        
-        do {
-            try reachability.startNotifier()
-        } catch {
-            print("Unable to start notifier")
-        }
     }
     
     func sendMessage(message: triprAPIMessage, APIresponse : @escaping (TriprAPIResponseMessage)->Void) throws
     {
         
-        if !self.isInternetAvailable {
+        if !api.isInternetAvailable(){
             if message.queable {
                 self.messageQueue.append(message)
                 return
